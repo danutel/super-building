@@ -1,0 +1,26 @@
+~~~~~~~~~~~~Box~~~~~~~~~~~~~~~~~~~~~~~~
+
+box = new Box(brickLength, brickHeight, brickWidth); dimensiuni
+box.scaleTextureCoordinates(new Vector2f(1f, .5f));	scaleaza textura pe suprafata
+
+
+~~~~~~~~~~~Sphere~~~~~~~~~~~~~~~~~~~~~~
+
+sphere = new Sphere(32, 32, 0.4f, true, false);
+
+
+~~~~~~~~~~~PhysX Setup~~~~~~~~~~~~~~~~~
+
+bulletAppState = new BulletAppState();
+stateManager.attach(bulletAppState);
+
+Geometry floor = new Geometry("Floor", box);
+RigidBodyControl floor_phy = new RigidBodyControl(masa);
+floor.addControl(floor_phy);
+bulletAppState.getPhysicsSpace().add(floor_phy);
+
+~~~~~~~~~~~Camera config~~~~~~~~~~~~~~~
+
+cam.setLocation(new Vector3f(x, z, y)); pozitia camerei
+cam.lookAt(new Vector3f(2, 2, 0), Vector3f.UNIT_Y); locul unde focuseaza
+flyCam.setMoveSpeed(20); viteza cu care te poti misca
