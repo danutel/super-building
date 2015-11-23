@@ -8,6 +8,14 @@ box.scaleTextureCoordinates(new Vector2f(1f, .5f));	scaleaza textura pe suprafat
 
 sphere = new Sphere(32, 32, 0.4f, true, false);
 
+~~~~~~~~~~~Object setup~~~~~~~~~~~~~~~~
+
+ninja.scale(0.05f, 0.05f, 0.05f);
+ninja.rotate(0.0f, -3.0f, 0.0f);
+ninja.setLocalTranslation(0.0f, -5.0f, -2.0f);
+BitmapText helloText = new BitmapText(guiFont, false);
+helloText.setSize(guiFont.getCharSet().getRenderedSize());
+helloText.setText("Hello World");
 
 ~~~~~~~~~~~PhysX Setup~~~~~~~~~~~~~~~~~
 
@@ -37,6 +45,26 @@ player.setGravity(70);
 player.setPhysicsLocation(new Vector3f(0, 10, 0));
 bulletAppState.getPhysicsSpace().add(player);
 
+public void simpleUpdate(float tpf) {
+        camDir.set(cam.getDirection()).multLocal(0.6f);
+        camLeft.set(cam.getLeft()).multLocal(0.4f);
+        walkDirection.set(0, 0, 0);
+        if (left) {
+            walkDirection.addLocal(camLeft);
+        }
+        if (right) {
+            walkDirection.addLocal(camLeft.negate());
+        }
+        if (up) {
+            walkDirection.addLocal(camDir);
+        }
+        if (down) {
+            walkDirection.addLocal(camDir.negate());
+        }
+        player.setWalkDirection(walkDirection);
+        cam.setLocation(player.getPhysicsLocation());
+    }
+
 ~~~~~~~~~~~~Lumina~~~~~~~~~~~~~~~~~~~~~
 
 AmbientLight al = new AmbientLight();
@@ -47,6 +75,25 @@ DirectionalLight dl = new DirectionalLight();
 dl.setColor(ColorRGBA.White);
 dl.setDirection(new Vector3f(2.8f, -2.8f, -2.8f).normalizeLocal());
 rootNode.addLight(dl);
+
+~~~~~~~~~~~~~Input~~~~~~~~~~~~~~~~~~~~~
+
+inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
+inputManager.addListener(this, "Jump");
+
+public void onAction(String binding, boolean isPressed, float tpf) {
+    if (binding.equals("Left")) {
+      left = isPressed;
+    } else if (binding.equals("Right")) {
+      right= isPressed;
+    } else if (binding.equals("Up")) {
+      up = isPressed;
+    } else if (binding.equals("Down")) {
+      down = isPressed;
+    } else if (binding.equals("Jump")) {
+      if (isPressed) { player.jump(); }
+    }
+  }
 
 ~~~~~~~~~~~Incarcare model~~~~~~~~~~~~~
 
