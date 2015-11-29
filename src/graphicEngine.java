@@ -15,11 +15,22 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
+import com.jme3.light.SpotLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.shadow.DirectionalLightShadowFilter;
+import com.jme3.shadow.DirectionalLightShadowRenderer;
+import com.jme3.shadow.PointLightShadowFilter;
+import com.jme3.shadow.PointLightShadowRenderer;
+import com.jme3.util.SkyFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class graphicEngine extends SimpleApplication implements ActionListener{
 
@@ -28,29 +39,31 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
     private BulletAppState bulletAppState;
     private CharacterControl player;
-    private Spatial femeie1,map,bloc,barbat1,femeie2,barbat3,femeie3;
+    private Spatial map,bloc,bec,barbat1,detector_fum;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
     private Vector3f walkDirection = new Vector3f();
-
-
+    public static List<requestHandler> request = new ArrayList<requestHandler>();
+    SpotLight spot;
 
     @Override
     public void simpleInitApp() {
 
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
+        //viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
 
-        load_object("map.zip","main.j3o",map,0,0,0,1,1,1,0,0,0,0);
-        load_object("bloc.zip","ggg.j3o", bloc,-420,1,-110,0.5f,0.5f,0.5f,0,0,0,0);
-        load_object("Modele/Oameni/femeie1.zip","femeie1.scene", femeie1,-500,-10,-10,0.0022f,0.0022f,0.0022f,0,0,0,1f);
-        load_object("Modele/Oameni/barbat1.zip","barbat1.j3o", barbat1,-400,0,-20,0.13f,0.13f,0.13f,0,0,0,0.5f);
-        load_object("Modele/Oameni/femeie2.zip","femeie2.j3o", femeie2,-400,0,0,0.15f,0.15f,0.15f,0,0,0,0.5f);
-        load_object("Modele/Oameni/barbat3.zip","barbat3.j3o", barbat3,-420,0,-20,0.15f,0.12f,0.12f,0,0,0,0.5f);
-        load_object("Modele/Oameni/femeie3.zip","femeie3.j3o", femeie3,-400,0,-30,0.12f,0.12f,0.12f,0,0,0,0.5f);
-       // load_object("Modele/Oameni/femeie1.zip","femeie1.j3o", femeie1,0,0,0,0.25f,0.25f,0.25f,0,0,0,0.5f);
+        Spatial sky = SkyFactory.createSky(assetManager, "Scenes/Beach/FullskiesSunset0068.dds", false);
+        sky.setLocalScale(550);
+        rootNode.attachChild(sky);
+
+        requestHandler m = new requestHandler("load","map.zip","main.j3o","map",0,0,0,1,1,1,0,0,0,0);
+        requestHandler b = new requestHandler("load","bloc.zip","ggg.j3o", "bloc",-420,1,-110,0.5f,0.5f,0.5f,0,0,0,0);
+        load_object(m);
+        load_object(b);
+
+        // load_object("Modele/Oameni/femeie1.zip","femeie1.j3o", femeie1,0,0,0,0.25f,0.25f,0.25f,0,0,0,0.5f);
         //load_object("Modele/Oameni/femeie1.zip","femeie1.j3o", femeie1,0,0,0,0.25f,0.25f,0.25f,0,0,0,0.5f);
 
         lightSetup();
@@ -78,15 +91,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void lightSetup()
     {
         AmbientLight al = new AmbientLight();
-        al.setColor(ColorRGBA.White.mult(2f));
-        rootNode.addLight(al);
+        al.setColor(ColorRGBA.White.mult(1f));
+        //rootNode.addLight(al);
 
         DirectionalLight sun = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
         sun.setDirection(new Vector3f(-1f, -1f, -1f).normalizeLocal());
-        rootNode.addLight(sun);
-
-
+        //rootNode.addLight(sun);
     }
 
     private void setUpKeys() {
@@ -132,18 +143,49 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         }
     }
 
-    public void load_object( String fisier, String nume,Spatial numeObiect,int tX,int tY,int tZ,float sX, float sY, float sZ, int rX,int rY,int rZ,float masa)
+    public void load_light(requestHandler x)
     {
-        assetManager.registerLocator(fisier, ZipLocator.class);
-        numeObiect = assetManager.loadModel(nume);
-        numeObiect.setLocalTranslation(tX,tY,tZ);
-        numeObiect.scale(sX,sY,sZ);
-        numeObiect.rotate(rX,rY,rZ);
-        //CollisionShape sceneShape = CollisionShapeFactory.createMeshShape((Node) numeObiect);
-        RigidBodyControl numeObiect_PhysX = new RigidBodyControl(masa);
+        PointLight lamp_light = new PointLight();
+        lamp_light.setColor(ColorRGBA.White);
+        lamp_light.setRadius(100f);
+        lamp_light.setPosition(new Vector3f(bec.getLocalTranslation().getX(),bec.getLocalTranslation().getY()-15,bec.getLocalTranslation().getZ()));
+        rootNode.addLight(lamp_light);
+
+
+    }
+
+    public void load_object(requestHandler x)
+    {
+        Spatial numeObiect;
+        assetManager.registerLocator(x.nume_arhiva, ZipLocator.class);
+        numeObiect = assetManager.loadModel(x.nume_fisier);
+        numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
+        numeObiect.scale(x.scalare_x,x.scalare_y,x.scalare_z);
+        numeObiect.rotate(x.rotatie_x,x.rotatie_y,x.rotatie_z);
+        RigidBodyControl numeObiect_PhysX = new RigidBodyControl(x.masa);
         numeObiect.addControl(numeObiect_PhysX);
         bulletAppState.getPhysicsSpace().add(numeObiect_PhysX);
-        rootNode.attachChild(numeObiect);
+        switch (x.nume_obiect)
+        {
+            case "map": map=numeObiect;
+                rootNode.attachChild(map);
+                break;
+            case "bloc": bloc=numeObiect;
+                rootNode.attachChild(bloc);
+                break;
+            case "detector_fum":
+                detector_fum = numeObiect;
+                rootNode.attachChild(detector_fum);
+                break;
+            case "bec":
+                bec = numeObiect;
+                rootNode.attachChild(bec);
+                break;
+            case "barbat1":
+                barbat1 = numeObiect;
+                rootNode.attachChild(barbat1);
+                break;
+        }
     }
 
     public void arunca()
@@ -153,6 +195,19 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     @Override
     public void simpleUpdate(float tpf) {
+
+         if (request.isEmpty()==false)
+        {
+            requestHandler x = request.get(0);
+            switch (x.type)
+            {
+                case "load": load_object(x);
+                    break;
+                case "light": load_light(x);
+                    break;
+            }
+            request.remove(0);
+        }
         if(!camera) {
             camDir.set(cam.getDirection()).multLocal(0.6f);
             camLeft.set(cam.getLeft()).multLocal(0.4f);
@@ -171,8 +226,10 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
             }
             player.setWalkDirection(walkDirection);
             cam.setLocation(player.getPhysicsLocation());
+
         }
     }
+
 
 
 }

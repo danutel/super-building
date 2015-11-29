@@ -4,10 +4,12 @@ import jade.core.Agent;
 public class unAgent extends Agent {
     @Override
     protected void setup() {
-        addBehaviour(new clientRegisterBehaviour());
-
-        graphicEngine app = new graphicEngine();
+        graphicEngine app=new graphicEngine();
         app.start();
-        //app.load_object("map.zip","main.j3o",mac,0,0,0,1,1,1,0,0,0,0);
+        requestHandler obiect = new requestHandler("load","Modele/Oameni/barbat1.zip", "barbat1.j3o", "barbat1", -400, 0, -20, 0.13f, 0.13f, 0.13f, 0, 0, 0, 0.5f);
+        graphicEngine.request.add(obiect);
+
+
+
     }
 }
