@@ -1,12 +1,11 @@
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.plugins.ClasspathLocator;
 import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
-import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
@@ -15,20 +14,15 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
-import com.jme3.light.SpotLight;
+import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
-import com.jme3.shadow.DirectionalLightShadowFilter;
-import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.shadow.PointLightShadowFilter;
 import com.jme3.shadow.PointLightShadowRenderer;
 import com.jme3.util.SkyFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +33,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
     private BulletAppState bulletAppState;
     private CharacterControl player;
-    private Spatial map,bloc,bec,barbat1,detector_fum;
+    private Spatial map,bloc,bec,barbat1,detector_fum,stropitoare,vent;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
     private Vector3f walkDirection = new Vector3f();
     public static List<requestHandler> request = new ArrayList<requestHandler>();
-    SpotLight spot;
 
     @Override
     public void simpleInitApp() {
@@ -70,6 +63,9 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         cameraSetup();
         load_player();
         setUpKeys();
+        hud();
+        foc_start();
+        stropire();
     }
 
     public  void load_player()
@@ -117,6 +113,35 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         inputManager.addListener(this, "Teleport");
     }
 
+    public void hud(){
+
+    }
+
+    public void stropire()
+    {
+        ParticleEmitter water = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle,200000 );
+        assetManager.registerLocator("assets/stropi.zip", ZipLocator.class);
+        Material stropi = assetManager.loadMaterial("stropi.j3m");
+        water.setMaterial(stropi);
+        water.setLocalTranslation(-670,-88,-130);
+        water.setEndColor(  new ColorRGBA(0.8f, 0.8f, 1.0f, 0.5f));   // red
+        water.setStartColor(new ColorRGBA(0.6f, 0.6f, 1.0f, 0.0f)); // yellow
+        water.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 14, 0));
+        water.setStartSize(0.03f);
+        water.setEndSize(0.08f);
+        water.setGravity(0, 80, 0);
+        water.setLowLife(0.5f);
+        water.setHighLife(0.6f);
+        water.setRandomAngle(true);
+        water.setNumParticles(100000);
+        water.setParticlesPerSec(4000);
+        water.getParticleInfluencer().setVelocityVariation(2f);
+        rootNode.attachChild(water);
+    }
+
+    public void foc_start(){
+    }
+
     public void onAction(String binding, boolean isPressed, float tpf) {
         if (binding.equals("Left")) {
             left = isPressed;
@@ -146,12 +171,23 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void load_light(requestHandler x)
     {
         PointLight lamp_light = new PointLight();
-        lamp_light.setColor(ColorRGBA.White);
+        lamp_light.setColor(ColorRGBA.White.mult(3f));
         lamp_light.setRadius(100f);
-        lamp_light.setPosition(new Vector3f(bec.getLocalTranslation().getX(),bec.getLocalTranslation().getY()-15,bec.getLocalTranslation().getZ()));
+        lamp_light.setPosition(new Vector3f(x.translatie_x,x.translatie_y,x.translatie_z));
         rootNode.addLight(lamp_light);
 
+        final int SHADOWMAP_SIZE=1024;
+        PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
+        dlsr.setLight(lamp_light);
+        viewPort.addProcessor(dlsr);
+        rootNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
+        PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
+        dlsf.setLight(lamp_light);
+        dlsf.setEnabled(true);
+        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+        fpp.addFilter(dlsf);
+        viewPort.addProcessor(fpp);
     }
 
     public void load_object(requestHandler x)
@@ -162,6 +198,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
         numeObiect.scale(x.scalare_x,x.scalare_y,x.scalare_z);
         numeObiect.rotate(x.rotatie_x,x.rotatie_y,x.rotatie_z);
+        numeObiect.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         RigidBodyControl numeObiect_PhysX = new RigidBodyControl(x.masa);
         numeObiect.addControl(numeObiect_PhysX);
         bulletAppState.getPhysicsSpace().add(numeObiect_PhysX);
@@ -181,6 +218,14 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                 bec = numeObiect;
                 rootNode.attachChild(bec);
                 break;
+            case "stropitoare":
+                stropitoare = numeObiect;
+                rootNode.attachChild(stropitoare);
+                break;
+            case "vent":
+                vent = numeObiect;
+                rootNode.attachChild(vent);
+                break;
             case "barbat1":
                 barbat1 = numeObiect;
                 rootNode.attachChild(barbat1);
@@ -188,10 +233,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         }
     }
 
-    public void arunca()
-    {
 
-    }
 
     @Override
     public void simpleUpdate(float tpf) {
