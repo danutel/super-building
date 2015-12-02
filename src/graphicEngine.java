@@ -22,6 +22,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
 import com.jme3.shadow.PointLightShadowFilter;
 import com.jme3.shadow.PointLightShadowRenderer;
+import com.jme3.shadow.PssmShadowRenderer;
 import com.jme3.util.SkyFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         setUpKeys();
         hud();
         foc_start();
-        stropire();
+        smoke();
+        //stropire();
     }
 
     public  void load_player()
@@ -140,6 +142,49 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
 
     public void foc_start(){
+        ParticleEmitter fire = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
+        Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
+        mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
+        //mat_red.getAdditionalRenderState().setDepthTest(true);
+        //mat_red.getAdditionalRenderState().setDepthWrite(true);
+        fire.setMaterial(mat_red);
+        fire.setImagesX(2); fire.setImagesY(2); // 2x2 texture animation
+        fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+        fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+        fire.setInitialVelocity(new Vector3f(0, 8, 0));
+        fire.setStartSize(6.6f);
+        fire.setEndSize(0.5f);
+        fire.setGravity(0, 0, 0);
+        fire.setLowLife(2.5f);
+        fire.setHighLife(3.5f);
+        fire.setVelocityVariation(0.35f);
+        fire.setQueueBucket(RenderQueue.Bucket.Translucent);
+        fire.setLocalTranslation(-670,-110,-130);
+        rootNode.attachChild(fire);
+    }
+
+    public void smoke()
+    {
+        ParticleEmitter smoketrail = new ParticleEmitter("SmokeTrail", ParticleMesh.Type.Triangle, 2200);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
+        mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/smoketrail.png"));
+        smoketrail.setMaterial(mat);
+        smoketrail.setImagesX(1);
+        smoketrail.setImagesY(3);
+        smoketrail.setStartColor(new ColorRGBA(1f, 0.8f, 0.36f, (float) (1.0f / 1)));
+        smoketrail.setEndColor(new ColorRGBA(1f, 0.8f, 0.36f, 0f));
+        smoketrail.setInitialVelocity(new Vector3f(0, 5, 0));
+        smoketrail.setLocalTranslation(-670,-110,-130);
+        smoketrail.setStartSize(2f);
+        smoketrail.setEndSize(10f);
+        smoketrail.setFacingVelocity(true);
+        smoketrail.setParticlesPerSec(100);
+        smoketrail.setGravity(0, 0, 0);
+        smoketrail.setLowLife(1.4f);
+        smoketrail.setHighLife(3.5f);
+        smoketrail.setVelocityVariation(0.1f);
+        smoketrail.setQueueBucket(RenderQueue.Bucket.Translucent);
+        rootNode.attachChild(smoketrail);
     }
 
     public void onAction(String binding, boolean isPressed, float tpf) {
