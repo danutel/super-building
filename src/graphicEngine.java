@@ -34,7 +34,16 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
     private BulletAppState bulletAppState;
     private CharacterControl player;
-    private Spatial map,bloc,bec,barbat1,detector_fum,stropitoare,vent;
+    private Spatial map,bloc;
+    private Spatial bec;
+    private Spatial detector_fum;
+    private Spatial stropitoare;
+    private Spatial vent;
+    private Spatial barbat1;
+    private Spatial femeie1;
+    private ParticleEmitter smoketrail1;
+    private ParticleEmitter water1;
+    private ParticleEmitter fire1;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
@@ -46,7 +55,6 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        //viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
 
         Spatial sky = SkyFactory.createSky(assetManager, "Scenes/Beach/FullskiesSunset0068.dds", false);
         sky.setLocalScale(550);
@@ -57,17 +65,11 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         load_object(m);
         load_object(b);
 
-        // load_object("Modele/Oameni/femeie1.zip","femeie1.j3o", femeie1,0,0,0,0.25f,0.25f,0.25f,0,0,0,0.5f);
-        //load_object("Modele/Oameni/femeie1.zip","femeie1.j3o", femeie1,0,0,0,0.25f,0.25f,0.25f,0,0,0,0.5f);
-
         lightSetup();
         cameraSetup();
         load_player();
         setUpKeys();
         hud();
-        foc_start();
-        smoke();
-        //stropire();
     }
 
     public  void load_player()
@@ -119,72 +121,88 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     }
 
-    public void stropire()
+    public void stropire(requestHandler x)
     {
-        ParticleEmitter water = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle,200000 );
+        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle,200000 );
         assetManager.registerLocator("assets/stropi.zip", ZipLocator.class);
         Material stropi = assetManager.loadMaterial("stropi.j3m");
-        water.setMaterial(stropi);
-        water.setLocalTranslation(-670,-88,-130);
-        water.setEndColor(  new ColorRGBA(0.8f, 0.8f, 1.0f, 0.5f));   // red
-        water.setStartColor(new ColorRGBA(0.6f, 0.6f, 1.0f, 0.0f)); // yellow
-        water.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 14, 0));
-        water.setStartSize(0.03f);
-        water.setEndSize(0.08f);
-        water.setGravity(0, 80, 0);
-        water.setLowLife(0.5f);
-        water.setHighLife(0.6f);
-        water.setRandomAngle(true);
-        water.setNumParticles(100000);
-        water.setParticlesPerSec(4000);
-        water.getParticleInfluencer().setVelocityVariation(2f);
-        rootNode.attachChild(water);
+        numeObiect.setMaterial(stropi);
+        numeObiect.setLocalTranslation(-670,-88,-130);
+        numeObiect.setEndColor(  new ColorRGBA(0.8f, 0.8f, 1.0f, 0.5f));   // red
+        numeObiect.setStartColor(new ColorRGBA(0.6f, 0.6f, 1.0f, 0.0f)); // yellow
+        numeObiect.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 14, 0));
+        numeObiect.setStartSize(0.03f);
+        numeObiect.setEndSize(0.08f);
+        numeObiect.setGravity(0, 80, 0);
+        numeObiect.setLowLife(0.5f);
+        numeObiect.setHighLife(0.6f);
+        numeObiect.setRandomAngle(true);
+        numeObiect.setNumParticles(100000);
+        numeObiect.setParticlesPerSec(4000);
+        numeObiect.getParticleInfluencer().setVelocityVariation(2f);
+        switch (x.nume_obiect) {
+            case "water1":
+                water1 = numeObiect;
+                rootNode.attachChild(water1);
+                break;
+        }
     }
 
-    public void foc_start(){
-        ParticleEmitter fire = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
+    public void foc_start(requestHandler x){
+        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
         Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
         //mat_red.getAdditionalRenderState().setDepthTest(true);
         //mat_red.getAdditionalRenderState().setDepthWrite(true);
-        fire.setMaterial(mat_red);
-        fire.setImagesX(2); fire.setImagesY(2); // 2x2 texture animation
-        fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
-        fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
-        fire.setInitialVelocity(new Vector3f(0, 8, 0));
-        fire.setStartSize(6.6f);
-        fire.setEndSize(0.5f);
-        fire.setGravity(0, 0, 0);
-        fire.setLowLife(2.5f);
-        fire.setHighLife(3.5f);
-        fire.setVelocityVariation(0.35f);
-        fire.setQueueBucket(RenderQueue.Bucket.Translucent);
-        fire.setLocalTranslation(-670,-110,-130);
-        rootNode.attachChild(fire);
+        numeObiect.setMaterial(mat_red);
+        numeObiect.setImagesX(2);
+        numeObiect.setImagesY(2); // 2x2 texture animation
+        numeObiect.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+        numeObiect.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+        numeObiect.setInitialVelocity(new Vector3f(0, 8, 0));
+        numeObiect.setStartSize(6.6f);
+        numeObiect.setEndSize(0.5f);
+        numeObiect.setGravity(0, 0, 0);
+        numeObiect.setLowLife(2.5f);
+        numeObiect.setHighLife(3.5f);
+        numeObiect.setVelocityVariation(0.35f);
+        numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
+        numeObiect.setLocalTranslation(-670,-110,-130);
+        switch (x.nume_obiect) {
+            case "fire1":
+                fire1 = numeObiect;
+                rootNode.attachChild(fire1);
+                break;
+        }
     }
 
-    public void smoke()
+    public void smoke(requestHandler x)
     {
-        ParticleEmitter smoketrail = new ParticleEmitter("SmokeTrail", ParticleMesh.Type.Triangle, 2200);
+        ParticleEmitter numeObiect= new ParticleEmitter("SmokeTrail", ParticleMesh.Type.Triangle, 2200);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
         mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/smoketrail.png"));
-        smoketrail.setMaterial(mat);
-        smoketrail.setImagesX(1);
-        smoketrail.setImagesY(3);
-        smoketrail.setStartColor(new ColorRGBA(1f, 0.8f, 0.36f, (float) (1.0f / 1)));
-        smoketrail.setEndColor(new ColorRGBA(1f, 0.8f, 0.36f, 0f));
-        smoketrail.setInitialVelocity(new Vector3f(0, 5, 0));
-        smoketrail.setLocalTranslation(-670,-110,-130);
-        smoketrail.setStartSize(2f);
-        smoketrail.setEndSize(10f);
-        smoketrail.setFacingVelocity(true);
-        smoketrail.setParticlesPerSec(100);
-        smoketrail.setGravity(0, 0, 0);
-        smoketrail.setLowLife(1.4f);
-        smoketrail.setHighLife(3.5f);
-        smoketrail.setVelocityVariation(0.1f);
-        smoketrail.setQueueBucket(RenderQueue.Bucket.Translucent);
-        rootNode.attachChild(smoketrail);
+        numeObiect.setMaterial(mat);
+        numeObiect.setImagesX(1);
+        numeObiect.setImagesY(3);
+        numeObiect.setStartColor(new ColorRGBA(1f, 0.8f, 0.36f, (float) (1.0f / 1)));
+        numeObiect.setEndColor(new ColorRGBA(1f, 0.8f, 0.36f, 0f));
+        numeObiect.setInitialVelocity(new Vector3f(0, 5, 0));
+        numeObiect.setLocalTranslation(-670,-110,-130);
+        numeObiect.setStartSize(2f);
+        numeObiect.setEndSize(10f);
+        numeObiect.setFacingVelocity(true);
+        numeObiect.setParticlesPerSec(100);
+        numeObiect.setGravity(0, 0, 0);
+        numeObiect.setLowLife(1.4f);
+        numeObiect.setHighLife(3.5f);
+        numeObiect.setVelocityVariation(0.1f);
+        numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
+        switch (x.nume_obiect) {
+            case "smoketrail1":
+                smoketrail1 = numeObiect;
+                rootNode.attachChild(smoketrail1);
+                break;
+        }
     }
 
     public void onAction(String binding, boolean isPressed, float tpf) {
@@ -291,6 +309,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                 case "load": load_object(x);
                     break;
                 case "light": load_light(x);
+                    break;
+                case "foc_start": foc_start(x);
+                    break;
+                case "stropire": stropire(x);
+                    break;
+                case "smoke": smoke(x);
                     break;
             }
             request.remove(0);
