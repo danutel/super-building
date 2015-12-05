@@ -6,34 +6,69 @@ public class agentFum extends Agent {
     @Override
     public void setup()
     {
-        requestHandler x = new requestHandler("load","Modele/Obiecte/fum.zip","fum.j3o","detector_fum",-665,-87,-150,1,1,1,0,0,0,0);
-        graphicEngine.request.add(x);
-        requestHandler y = new requestHandler("load","Modele/Obiecte/bec.zip","bec.j3o","bec",-670,-87,-150,1,1,1,0,0,0,0);
-        graphicEngine.request.add(y);
-        requestHandler z = new requestHandler("light","Modele/Obiecte/bec.zip","bec.j3o","bec",-670,-97,-150,1,1,1,0,0,0,0);
-        graphicEngine.request.add(z);
-        requestHandler w = new requestHandler("load","Modele/Obiecte/stropitoare.zip","stropitoare.j3o","stropitoare",-670,-87,-130,0.04f,0.04f,0.04f,0,0,0,0);
-        graphicEngine.request.add(w);
-        requestHandler vent = new requestHandler("load","Modele/Obiecte/vent.zip","vent.j3o","vent",-660,-84,-120,0.04f,0.04f,0.04f,0,0,0,0);
-        graphicEngine.request.add(vent);
+
+      /*  requestHandler h = new requestHandler("stropire","water1",true,-670,-88,-130);
+        //graphicEngine.request.add(h);
+        requestHandler hf = new requestHandler("foc_start","fire1",true,-670,-110,-130);
+       // graphicEngine.request.add(hf);
+
+        requestHandler fg = new requestHandler("load","Modele/Obiecte/vent.zip","vent.j3o","vent",-660,-84,-120,0.04f,0.04f,0.04f,0,0,0,0);
+        graphicEngine.request.add(fg);*/
+
         addBehaviour(new Behaviour() {
             @Override
             public void action() {
-                senzor_fum=environment.fum;
+
+                if(environment.fum>25)
+                {
+                    senzor_fum=true;
+                }
+                else
+                {
+                    senzor_fum=false;
+                }
+
                 if(senzor_fum) {
                     environment.alarma_incendiu = true;
                     environment.ventilatie = 2;
                     environment.curent_electric = false;
+                    try {
+                        Thread.sleep(600);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     environment.lumini_urgenta = true;
+                    try {
+                        Thread.sleep(600);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     environment.sprinkler = true;
                 }
                 else
                 {
                     environment.alarma_incendiu = false;
+                    try {
+                        Thread.sleep(600);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    environment.sprinkler = false;
+                    try {
+                        Thread.sleep(600);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     environment.ventilatie = 1;
                     environment.curent_electric = true;
                     environment.lumini_urgenta = false;
-                    environment.sprinkler = false;
+                }
+
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
 

@@ -44,6 +44,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private ParticleEmitter smoketrail1;
     private ParticleEmitter water1;
     private ParticleEmitter fire1;
+    private PointLight light1;
+    private PointLightShadowRenderer dlsr1;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
@@ -59,6 +61,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         Spatial sky = SkyFactory.createSky(assetManager, "Scenes/Beach/FullskiesSunset0068.dds", false);
         sky.setLocalScale(550);
         rootNode.attachChild(sky);
+        rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
 
         requestHandler m = new requestHandler("load","map.zip","main.j3o","map",0,0,0,1,1,1,0,0,0,0);
         requestHandler b = new requestHandler("load","bloc.zip","ggg.j3o", "bloc",-420,1,-110,0.5f,0.5f,0.5f,0,0,0,0);
@@ -117,6 +120,33 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         inputManager.addListener(this, "Teleport");
     }
 
+    public void onAction(String binding, boolean isPressed, float tpf) {
+        if (binding.equals("Left")) {
+            left = isPressed;
+        } else if (binding.equals("Right")) {
+            right= isPressed;
+        } else if (binding.equals("Up")) {
+            up = isPressed;
+        } else if (binding.equals("Down"))
+        {
+            down = isPressed;
+        }
+        else if (binding.equals("Change_camera"))
+        {
+            camera = !camera;
+        }
+        else if (binding.equals("Teleport"))
+        {
+            player.setPhysicsLocation(cam.getLocation());
+        }
+        else if (binding.equals("Jump")) {
+            if (isPressed) {
+                player.jump();
+                environment.foc=1;
+            }
+        }
+    }
+
     public void hud(){
 
     }
@@ -127,7 +157,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         assetManager.registerLocator("assets/stropi.zip", ZipLocator.class);
         Material stropi = assetManager.loadMaterial("stropi.j3m");
         numeObiect.setMaterial(stropi);
-        numeObiect.setLocalTranslation(-670,-88,-130);
+        numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
         numeObiect.setEndColor(  new ColorRGBA(0.8f, 0.8f, 1.0f, 0.5f));   // red
         numeObiect.setStartColor(new ColorRGBA(0.6f, 0.6f, 1.0f, 0.0f)); // yellow
         numeObiect.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 14, 0));
@@ -140,16 +170,26 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setNumParticles(100000);
         numeObiect.setParticlesPerSec(4000);
         numeObiect.getParticleInfluencer().setVelocityVariation(2f);
-        switch (x.nume_obiect) {
-            case "water1":
-                water1 = numeObiect;
-                rootNode.attachChild(water1);
-                break;
+        if(x.pornit) {
+            switch (x.nume_obiect) {
+                case "water1":
+                    water1 = numeObiect;
+                    rootNode.attachChild(water1);
+                    break;
+            }
+        }
+        else
+        {
+            switch (x.nume_obiect) {
+                case "water1":
+                    rootNode.detachChild(water1);
+                    break;
+            }
         }
     }
 
     public void foc_start(requestHandler x){
-        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 300);
+        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 100*x.intensitate_foc);
         Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
         //mat_red.getAdditionalRenderState().setDepthTest(true);
@@ -160,19 +200,31 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
         numeObiect.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
         numeObiect.setInitialVelocity(new Vector3f(0, 8, 0));
-        numeObiect.setStartSize(6.6f);
-        numeObiect.setEndSize(0.5f);
+        numeObiect.setStartSize((x.intensitate_foc/(float)10)*6.6f);
+        numeObiect.setEndSize((x.intensitate_foc/(float)10)*0.5f);
         numeObiect.setGravity(0, 0, 0);
-        numeObiect.setLowLife(2.5f);
-        numeObiect.setHighLife(3.5f);
-        numeObiect.setVelocityVariation(0.35f);
+        numeObiect.setLowLife((x.intensitate_foc/(float)10)*2.5f);
+        numeObiect.setHighLife((x.intensitate_foc/(float)10)*3.5f);
+        numeObiect.setVelocityVariation((x.intensitate_foc/(float)10)*0.35f);
         numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
-        numeObiect.setLocalTranslation(-670,-110,-130);
-        switch (x.nume_obiect) {
-            case "fire1":
-                fire1 = numeObiect;
-                rootNode.attachChild(fire1);
-                break;
+        numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
+        if(x.pornit) {
+            switch (x.nume_obiect) {
+                case "fire1":
+                    if(fire1!=null)
+                        rootNode.detachChild(fire1);
+                    fire1 = numeObiect;
+                    rootNode.attachChild(fire1);
+                    break;
+            }
+        }
+        else
+        {
+            switch (x.nume_obiect) {
+                case "fire1":
+                    rootNode.detachChild(fire1);
+                    break;
+            }
         }
     }
 
@@ -197,60 +249,72 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setHighLife(3.5f);
         numeObiect.setVelocityVariation(0.1f);
         numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
-        switch (x.nume_obiect) {
-            case "smoketrail1":
-                smoketrail1 = numeObiect;
-                rootNode.attachChild(smoketrail1);
-                break;
+        if(x.pornit) {
+            switch (x.nume_obiect) {
+                case "fire1":
+                    smoketrail1 = numeObiect;
+                    rootNode.attachChild(smoketrail1);
+                    break;
+            }
         }
-    }
-
-    public void onAction(String binding, boolean isPressed, float tpf) {
-        if (binding.equals("Left")) {
-            left = isPressed;
-        } else if (binding.equals("Right")) {
-            right= isPressed;
-        } else if (binding.equals("Up")) {
-            up = isPressed;
-        } else if (binding.equals("Down"))
+        else
         {
-            down = isPressed;
-        }
-        else if (binding.equals("Change_camera"))
-        {
-            camera = !camera;
-        }
-        else if (binding.equals("Teleport"))
-        {
-            player.setPhysicsLocation(cam.getLocation());
-        }
-        else if (binding.equals("Jump")) {
-            if (isPressed) {
-                player.jump();
+            switch (x.nume_obiect) {
+                case "fire1":
+                    rootNode.detachChild(smoketrail1);
+                    break;
             }
         }
     }
 
-    public void load_light(requestHandler x)
-    {
+    public void load_light(requestHandler x) {
         PointLight lamp_light = new PointLight();
-        lamp_light.setColor(ColorRGBA.White.mult(3f));
-        lamp_light.setRadius(100f);
+        if(x.alarma)
+        {
+            lamp_light.setColor(ColorRGBA.Red.mult(x.intensitate_lumina));
+        }
+        else {
+            lamp_light.setColor(ColorRGBA.White.mult(x.intensitate_lumina));
+        }
+        lamp_light.setRadius(x.suprafata);
         lamp_light.setPosition(new Vector3f(x.translatie_x,x.translatie_y,x.translatie_z));
-        rootNode.addLight(lamp_light);
 
         final int SHADOWMAP_SIZE=1024;
         PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
         dlsr.setLight(lamp_light);
-        viewPort.addProcessor(dlsr);
-        rootNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        dlsr.setShadowIntensity(1);
 
-        PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
+        switch (x.nume_obiect) {
+            case "light1":
+                if(light1!=null) {
+                    rootNode.removeLight(light1);
+                    viewPort.removeProcessor(dlsr1);
+                }
+                light1 = lamp_light;
+                dlsr1 = dlsr;
+                rootNode.addLight(light1);
+                viewPort.addProcessor(dlsr1);
+                break;
+        }
+
+        if(x.pornit==false)
+        {
+            switch (x.nume_obiect) {
+                case "light1":
+                    light1.setColor(ColorRGBA.randomColor().mult(0));
+                    viewPort.removeProcessor(dlsr1);
+                    break;
+            }
+        }
+
+       /* PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
         dlsf.setLight(lamp_light);
         dlsf.setEnabled(true);
+
         FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
         fpp.addFilter(dlsf);
-        viewPort.addProcessor(fpp);
+        viewPort.addProcessor(fpp);*/
+
     }
 
     public void load_object(requestHandler x)
@@ -261,7 +325,17 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
         numeObiect.scale(x.scalare_x,x.scalare_y,x.scalare_z);
         numeObiect.rotate(x.rotatie_x,x.rotatie_y,x.rotatie_z);
-        numeObiect.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        if(x.nume_obiect.equals("bloc")) {
+            numeObiect.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        }
+        else if (x.nume_obiect.equals("map"))
+        {
+            numeObiect.setShadowMode(RenderQueue.ShadowMode.Receive);
+        }
+        else
+        {
+            numeObiect.setShadowMode(RenderQueue.ShadowMode.Cast);
+        }
         RigidBodyControl numeObiect_PhysX = new RigidBodyControl(x.masa);
         numeObiect.addControl(numeObiect_PhysX);
         bulletAppState.getPhysicsSpace().add(numeObiect_PhysX);
