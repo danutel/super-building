@@ -5,7 +5,7 @@ public class environment extends Agent{
     public static float temperatura_interior;
     public static int fum;
     public static int foc;
-    public static float temperatura_exterior;
+    public static float temperatura_exterior=15;
     public static float lumina;
     public static  boolean curent_electric;
     public static  boolean lumini_urgenta;
@@ -17,6 +17,8 @@ public class environment extends Agent{
     private int foc_modificat;
     private boolean lumini_urgenta_activated=false;
     private boolean alarma_incendiu_activated;
+    public static float u;
+    private float Kp,Tp,yk,ykanterior;
 
     @Override
     public void setup(){
@@ -32,7 +34,28 @@ public class environment extends Agent{
         requestHandler vent = new requestHandler("load","Modele/Obiecte/vent.zip","vent.j3o","vent",-660,-84,-120,0.04f,0.04f,0.04f,0,0,0,0);
         graphicEngine.request.add(vent);
 
+        Kp=0.05882f;
+        Tp=0.8824f;
+        u=1f;
 
+        addBehaviour(new Behaviour() {
+            @Override
+            public void action() {
+                yk=(Kp*u*2)+(Tp*ykanterior);
+                ykanterior=yk;
+                temperatura_interior=yk+temperatura_exterior;
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public boolean done() {
+                return false;
+            }
+        });
 
         addBehaviour(new Behaviour() {
             @Override

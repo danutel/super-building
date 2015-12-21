@@ -6,6 +6,8 @@ import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
@@ -15,14 +17,17 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
 import com.jme3.shadow.PointLightShadowFilter;
 import com.jme3.shadow.PointLightShadowRenderer;
 import com.jme3.shadow.PssmShadowRenderer;
+import com.jme3.ui.Picture;
 import com.jme3.util.SkyFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private ParticleEmitter fire1;
     private PointLight light1;
     private PointLightShadowRenderer dlsr1;
+    private BitmapText hudText,hudText2,hudText3;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
@@ -59,15 +65,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         stateManager.attach(bulletAppState);
 
         Spatial sky = SkyFactory.createSky(assetManager, "Scenes/Beach/FullskiesSunset0068.dds", false);
-        sky.setLocalScale(550);
+        sky.setLocalScale(1000);
         rootNode.attachChild(sky);
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
 
-        requestHandler m = new requestHandler("load","map.zip","main.j3o","map",0,0,0,1,1,1,0,0,0,0);
-        requestHandler b = new requestHandler("load","bloc.zip","ggg.j3o", "bloc",-420,1,-110,0.5f,0.5f,0.5f,0,0,0,0);
-        load_object(m);
-        load_object(b);
 
+        loadmap();
+        load_hud();
         lightSetup();
         cameraSetup();
         load_player();
@@ -75,9 +79,53 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hud();
     }
 
+    public void loadmap()
+    {
+       // load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+        //load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "bloc",-143,14,-1640,7f,7f,7f,0,0,0,0));//facultate
+        //load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.j3o", "bloc",1750,5,-1730,7f,7f,7f,0,0,0,0));//parc+stadion
+        //load_object(new requestHandler("load","Modele\\Harta\\4.zip","4.mesh.j3o", "bloc",119,15,-2680,7f,7f,7f,0,0,0,0));//parcare+terenuri
+    }
+
+    public void load_hud(){
+        setDisplayStatView(false);
+
+        Picture pic = new Picture("HUD Picture");
+        assetManager.registerLocator("Modele\\Materiale\\hud1.zip", ZipLocator.class);
+        pic.setImage(assetManager, "hud1.jpg", true);
+        Material mat = pic.getMaterial().clone();
+        mat.setColor("Color", new ColorRGBA(1,1,1,0.8f)); // Red with 50% transparency
+        mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+
+        pic.setMaterial(mat);
+        pic.setWidth(settings.getWidth()/8);
+        pic.setHeight(settings.getHeight()/4);
+        pic.setPosition(0, 20);
+        guiNode.attachChild(pic);
+
+        BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
+        hudText = new BitmapText(myFont, false);
+        hudText.setSize(15);
+        hudText.setColor(ColorRGBA.Green);           // the text
+        hudText.setLocalTranslation(10, (settings.getHeight()/4), 300); // position
+        guiNode.attachChild(hudText);
+
+        hudText2 = new BitmapText(myFont, false);
+        hudText2.setSize(15);
+        hudText2.setColor(ColorRGBA.Green);           // the text
+        hudText2.setLocalTranslation(10, (settings.getHeight()/4)-40, 300); // position
+        guiNode.attachChild(hudText2);
+
+        hudText3 = new BitmapText(myFont, false);
+        hudText3.setSize(15);
+        hudText3.setColor(ColorRGBA.Green);           // the text
+        hudText3.setLocalTranslation(10, (settings.getHeight()/4)-80, 300); // position
+        guiNode.attachChild(hudText3);
+    }
+
     public  void load_player()
     {
-        CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 15f, 1);
+        CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 12f, 1);
         player = new CharacterControl(capsuleShape, 2.5f);
         player.setJumpSpeed(20);
         player.setFallSpeed(50);
@@ -93,14 +141,34 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
     public void lightSetup()
     {
-        AmbientLight al = new AmbientLight();
-        al.setColor(ColorRGBA.White.mult(1f));
-        //rootNode.addLight(al);
+        PointLight lamp_light2 = new PointLight();
+        lamp_light2.setColor(ColorRGBA.White.mult(0.5f));
+        lamp_light2.setRadius(100000);
+        lamp_light2.setPosition(new Vector3f(-5000,5000,5000));
+        rootNode.addLight(lamp_light2);
 
-        DirectionalLight sun = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(new Vector3f(-1f, -1f, -1f).normalizeLocal());
-        //rootNode.addLight(sun);
+        PointLight lamp_light = new PointLight();
+        lamp_light.setColor(ColorRGBA.White.mult(1.2f));
+        lamp_light.setRadius(100000);
+        lamp_light.setPosition(new Vector3f(5000,5000,-5000));
+
+        final int SHADOWMAP_SIZE=4096;
+        PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
+        dlsr.setLight(lamp_light);
+        dlsr.setShadowIntensity(0.4f);
+        rootNode.addLight(lamp_light);
+        viewPort.addProcessor(dlsr);
+
+        PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
+        dlsf.setLight(lamp_light);
+        dlsf.setEnabled(true);
+
+        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+        SSAOFilter ssaoFilter = new SSAOFilter(12.94f, 43.92f, 0.33f, 0.61f);
+        fpp.addFilter(dlsf);
+        fpp.addFilter(ssaoFilter);
+        viewPort.addProcessor(fpp);
+
     }
 
     private void setUpKeys() {
@@ -282,7 +350,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         final int SHADOWMAP_SIZE=1024;
         PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
         dlsr.setLight(lamp_light);
-        dlsr.setShadowIntensity(1);
+        dlsr.setShadowIntensity(0.95f);
 
         switch (x.nume_obiect) {
             case "light1":
@@ -325,6 +393,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
         numeObiect.scale(x.scalare_x,x.scalare_y,x.scalare_z);
         numeObiect.rotate(x.rotatie_x,x.rotatie_y,x.rotatie_z);
+
         if(x.nume_obiect.equals("bloc")) {
             numeObiect.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         }
@@ -410,9 +479,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                 walkDirection.addLocal(camDir.negate());
             }
             player.setWalkDirection(walkDirection);
-            cam.setLocation(player.getPhysicsLocation());
+            cam.setLocation(new Vector3f(player.getPhysicsLocation().getX(),player.getPhysicsLocation().getY()+3,player.getPhysicsLocation().getZ()));
 
         }
+        hudText.setText("Coordonate:\n" + (int)cam.getLocation().getX() +"x"+ " "+(int)cam.getLocation().getY()+"y"+" "+(int)cam.getLocation().getZ()+"z");
+        hudText2.setText("Locatie:");
+        hudText3.setText("Temperatura:\n" + environment.temperatura_interior+" °C");
     }
 
 
