@@ -81,10 +81,17 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     public void loadmap()
     {
-       // load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-        //load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "bloc",-143,14,-1640,7f,7f,7f,0,0,0,0));//facultate
-        //load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.j3o", "bloc",1750,5,-1730,7f,7f,7f,0,0,0,0));//parc+stadion
-        //load_object(new requestHandler("load","Modele\\Harta\\4.zip","4.mesh.j3o", "bloc",119,15,-2680,7f,7f,7f,0,0,0,0));//parcare+terenuri
+        load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "bloc",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "bloc",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
+        load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
+        load_object(new requestHandler("load","Modele\\Harta\\2.zip","2.mesh.j3o", "bloc",-89,13,-314,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\7.zip","7.mesh.j3o", "bloc",2029,10,-415,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\8.zip","8.mesh.j3o", "bloc",1750,10,-2600,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\5.zip","5.mesh.j3o", "bloc",920,13,-360,7f,7f,7f,0,0,0,0));//parc+stadion
+        load_object(new requestHandler("load","Modele\\Harta\\5.zip","51.mesh.j3o", "bloc",1470,13,-960,7f,7f,7f,0,0,0,0));//parc+stadion
+        load_object(new requestHandler("load","Modele\\Harta\\5.zip","52.mesh.j3o", "bloc",550,13,-1500,7f,7f,7f,0,0,0,0));//parc+stadion
+        load_object(new requestHandler("load","Modele\\Harta\\5.zip","53.mesh.j3o", "bloc",0,13,-910,7f,7f,7f,0,0,0,0));//parc+stadion
     }
 
     public void load_hud(){
@@ -131,6 +138,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         player.setFallSpeed(50);
         player.setGravity(50);
         player.setPhysicsLocation(new Vector3f(0, 10, 0));
+        player.setPhysicsLocation(new Vector3f(-143,94,-1640));
         bulletAppState.getPhysicsSpace().add(player);
     }
     public void cameraSetup()
@@ -142,17 +150,17 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void lightSetup()
     {
         PointLight lamp_light2 = new PointLight();
-        lamp_light2.setColor(ColorRGBA.White.mult(0.5f));
+        lamp_light2.setColor(ColorRGBA.White.mult(0.4f));
         lamp_light2.setRadius(100000);
         lamp_light2.setPosition(new Vector3f(-5000,5000,5000));
         rootNode.addLight(lamp_light2);
 
         PointLight lamp_light = new PointLight();
-        lamp_light.setColor(ColorRGBA.White.mult(1.2f));
+        lamp_light.setColor(ColorRGBA.White.mult(1.7f));
         lamp_light.setRadius(100000);
         lamp_light.setPosition(new Vector3f(5000,5000,-5000));
 
-        final int SHADOWMAP_SIZE=4096;
+        final int SHADOWMAP_SIZE=1024;
         PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
         dlsr.setLight(lamp_light);
         dlsr.setShadowIntensity(0.4f);

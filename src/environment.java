@@ -45,7 +45,7 @@ public class environment extends Agent{
                 ykanterior=yk;
                 temperatura_interior=yk+temperatura_exterior;
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(9000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
