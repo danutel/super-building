@@ -21,6 +21,9 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
+import com.jme3.post.filters.DepthOfFieldFilter;
+import com.jme3.post.filters.LightScatteringFilter;
 import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
@@ -64,7 +67,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
 
-        Spatial sky = SkyFactory.createSky(assetManager, "Scenes/Beach/FullskiesSunset0068.dds", false);
+        Spatial sky = SkyFactory.createSky(assetManager, "Textures/Sky/Bright/FullskiesBlueClear03.dds", false);
         sky.setLocalScale(1000);
         rootNode.attachChild(sky);
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
@@ -92,6 +95,15 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         load_object(new requestHandler("load","Modele\\Harta\\5.zip","51.mesh.j3o", "bloc",1470,13,-960,7f,7f,7f,0,0,0,0));//parc+stadion
         load_object(new requestHandler("load","Modele\\Harta\\5.zip","52.mesh.j3o", "bloc",550,13,-1500,7f,7f,7f,0,0,0,0));//parc+stadion
         load_object(new requestHandler("load","Modele\\Harta\\5.zip","53.mesh.j3o", "bloc",0,13,-910,7f,7f,7f,0,0,0,0));//parc+stadion
+        load_object(new requestHandler("load","Modele\\Harta\\12.zip","12.mesh.j3o", "bloc",270,8,-489,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\13.zip","13.mesh.j3o", "bloc",270,8,-489,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\14.zip","14.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\15.zip","15.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\16.zip","16.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
     }
 
     public void load_hud(){
@@ -171,10 +183,19 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         dlsf.setLight(lamp_light);
         dlsf.setEnabled(true);
 
+      //  BloomFilter bloom=new BloomFilter();
+
+        DepthOfFieldFilter dofFilter = new DepthOfFieldFilter();
+        dofFilter.setFocusDistance(0);
+        dofFilter.setFocusRange(1000);
+        dofFilter.setBlurScale(1f);
+
         FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
         SSAOFilter ssaoFilter = new SSAOFilter(12.94f, 43.92f, 0.33f, 0.61f);
         fpp.addFilter(dlsf);
         fpp.addFilter(ssaoFilter);
+        //fpp.addFilter(bloom);
+        fpp.addFilter(dofFilter);
         viewPort.addProcessor(fpp);
 
     }

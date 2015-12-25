@@ -22,10 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="environment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="environment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/environment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.6854839">
               <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
               <folding />
             </state>
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graphicEngine.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="graphicEngine.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/graphicEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64354837">
-              <caret line="93" column="99" selection-start-line="93" selection-start-column="99" selection-end-line="93" selection-end-column="99" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="196" column="10" selection-start-line="196" selection-start-column="10" selection-end-line="196" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -128,8 +128,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -164,6 +162,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -942,21 +942,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/graphicEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64354837">
-          <caret line="93" column="99" selection-start-line="93" selection-start-column="99" selection-end-line="93" selection-end-column="99" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="196" column="10" selection-start-line="196" selection-start-column="10" selection-end-line="196" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6854839">
+          <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
