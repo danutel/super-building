@@ -6,6 +6,8 @@ import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
+import com.jme3.effect.shapes.EmitterBoxShape;
+import com.jme3.effect.shapes.EmitterSphereShape;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
@@ -21,6 +23,7 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.SceneProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.post.filters.DepthOfFieldFilter;
 import com.jme3.post.filters.LightScatteringFilter;
@@ -32,6 +35,9 @@ import com.jme3.shadow.PointLightShadowRenderer;
 import com.jme3.shadow.PssmShadowRenderer;
 import com.jme3.ui.Picture;
 import com.jme3.util.SkyFactory;
+
+import java.io.IOException;
+import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,15 +56,18 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private Spatial barbat1;
     private Spatial femeie1;
     private ParticleEmitter smoketrail1;
-    private ParticleEmitter water1;
+    private ParticleEmitter water1,water2,water3,water4;
     private ParticleEmitter fire1;
     private PointLight light1;
     private PointLightShadowRenderer dlsr1;
-    private BitmapText hudText,hudText2,hudText3;
+    private PointLightShadowFilter dlsf1;
+    private BitmapText hudText,hudText2,hudText3,hudText4,hudText5,hudText6,hudText7,hudText8,hudText9;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
     private Vector3f walkDirection = new Vector3f();
+    private int intensitate_fum=0;
+    private String locatie = "";
     public static List<requestHandler> request = new ArrayList<requestHandler>();
 
     @Override
@@ -85,9 +94,9 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void loadmap()
     {
         load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-        load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "bloc",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
         load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "bloc",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
-        load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
+       /* load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
         load_object(new requestHandler("load","Modele\\Harta\\2.zip","2.mesh.j3o", "bloc",-89,13,-314,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\7.zip","7.mesh.j3o", "bloc",2029,10,-415,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\8.zip","8.mesh.j3o", "bloc",1750,10,-2600,7f,7f,7f,0,0,0,0));//cladiri cercetare
@@ -103,7 +112,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
-        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare*/
     }
 
     public void load_hud(){
@@ -118,7 +127,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
         pic.setMaterial(mat);
         pic.setWidth(settings.getWidth()/8);
-        pic.setHeight(settings.getHeight()/4);
+        pic.setHeight(settings.getHeight()/2);
         pic.setPosition(0, 20);
         guiNode.attachChild(pic);
 
@@ -126,20 +135,56 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hudText = new BitmapText(myFont, false);
         hudText.setSize(15);
         hudText.setColor(ColorRGBA.Green);           // the text
-        hudText.setLocalTranslation(10, (settings.getHeight()/4), 300); // position
+        hudText.setLocalTranslation(10, (settings.getHeight()/2), 300); // position
         guiNode.attachChild(hudText);
 
         hudText2 = new BitmapText(myFont, false);
         hudText2.setSize(15);
         hudText2.setColor(ColorRGBA.Green);           // the text
-        hudText2.setLocalTranslation(10, (settings.getHeight()/4)-40, 300); // position
+        hudText2.setLocalTranslation(10, (settings.getHeight()/2)-40, 300); // position
         guiNode.attachChild(hudText2);
 
         hudText3 = new BitmapText(myFont, false);
         hudText3.setSize(15);
         hudText3.setColor(ColorRGBA.Green);           // the text
-        hudText3.setLocalTranslation(10, (settings.getHeight()/4)-80, 300); // position
+        hudText3.setLocalTranslation(10, (settings.getHeight()/2)-80, 300); // position
         guiNode.attachChild(hudText3);
+
+        hudText4 = new BitmapText(myFont, false);
+        hudText4.setSize(15);
+        hudText4.setColor(ColorRGBA.Green);           // the text
+        hudText4.setLocalTranslation(10, (settings.getHeight()/2)-120, 300); // position
+        guiNode.attachChild(hudText4);
+
+        hudText5 = new BitmapText(myFont, false);
+        hudText5.setSize(15);
+        hudText5.setColor(ColorRGBA.Green);           // the text
+        hudText5.setLocalTranslation(10, (settings.getHeight()/2)-140, 300); // position
+        guiNode.attachChild(hudText5);
+
+        hudText6 = new BitmapText(myFont, false);
+        hudText6.setSize(15);
+        hudText6.setColor(ColorRGBA.Green);           // the text
+        hudText6.setLocalTranslation(10, (settings.getHeight()/2)-160, 300); // position
+        guiNode.attachChild(hudText6);
+
+        hudText7 = new BitmapText(myFont, false);
+        hudText7.setSize(15);
+        hudText7.setColor(ColorRGBA.Green);           // the text
+        hudText7.setLocalTranslation(10, (settings.getHeight()/2)-180, 300); // position
+        guiNode.attachChild(hudText7);
+
+        hudText8 = new BitmapText(myFont, false);
+        hudText8.setSize(15);
+        hudText8.setColor(ColorRGBA.Green);           // the text
+        hudText8.setLocalTranslation(10, (settings.getHeight()/2)-200, 300); // position
+        guiNode.attachChild(hudText8);
+
+        hudText9 = new BitmapText(myFont, false);
+        hudText9.setSize(15);
+        hudText9.setColor(ColorRGBA.Green);           // the text
+        hudText9.setLocalTranslation(10, (settings.getHeight()/2)-220, 300); // position
+        guiNode.attachChild(hudText9);
     }
 
     public  void load_player()
@@ -150,12 +195,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         player.setFallSpeed(50);
         player.setGravity(50);
         player.setPhysicsLocation(new Vector3f(0, 10, 0));
-        player.setPhysicsLocation(new Vector3f(-143,94,-1640));
+        player.setPhysicsLocation(new Vector3f(1028,160,-2078));
         bulletAppState.getPhysicsSpace().add(player);
     }
     public void cameraSetup()
     {
-        cam.setFrustumFar(5000);
+        cam.setFrustumFar(4000);
         cam.onFrameChange();
         flyCam.setMoveSpeed(300);
     }
@@ -273,6 +318,18 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                     water1 = numeObiect;
                     rootNode.attachChild(water1);
                     break;
+                case "water2":
+                    water2 = numeObiect;
+                    rootNode.attachChild(water2);
+                    break;
+                case "water3":
+                    water3 = numeObiect;
+                    rootNode.attachChild(water3);
+                    break;
+                case "water4":
+                    water4 = numeObiect;
+                    rootNode.attachChild(water4);
+                    break;
             }
         }
         else
@@ -280,6 +337,15 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
             switch (x.nume_obiect) {
                 case "water1":
                     rootNode.detachChild(water1);
+                    break;
+                case "water2":
+                    rootNode.detachChild(water2);
+                    break;
+                case "water3":
+                    rootNode.detachChild(water3);
+                    break;
+                case "water4":
+                    rootNode.detachChild(water4);
                     break;
             }
         }
@@ -289,22 +355,23 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 100*x.intensitate_foc);
         Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
-        //mat_red.getAdditionalRenderState().setDepthTest(true);
-        //mat_red.getAdditionalRenderState().setDepthWrite(true);
         numeObiect.setMaterial(mat_red);
         numeObiect.setImagesX(2);
         numeObiect.setImagesY(2); // 2x2 texture animation
         numeObiect.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
         numeObiect.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
         numeObiect.setInitialVelocity(new Vector3f(0, 8, 0));
-        numeObiect.setStartSize((x.intensitate_foc/(float)10)*6.6f);
-        numeObiect.setEndSize((x.intensitate_foc/(float)10)*0.5f);
+        numeObiect.setStartSize((8/(float)10)*6.6f);
+        numeObiect.setEndSize((8/(float)10)*0.5f);
         numeObiect.setGravity(0, 0, 0);
         numeObiect.setLowLife((x.intensitate_foc/(float)10)*2.5f);
         numeObiect.setHighLife((x.intensitate_foc/(float)10)*3.5f);
         numeObiect.setVelocityVariation((x.intensitate_foc/(float)10)*0.35f);
         numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
-        numeObiect.setLocalTranslation(x.translatie_x,x.translatie_y,x.translatie_z);
+        numeObiect.setLocalTranslation((x.translatie_x-(10f*x.intensitate_foc)/2),x.translatie_y,(x.translatie_z-(15f*x.intensitate_foc)/2));
+        numeObiect.setShape(new EmitterBoxShape(new Vector3f(0, 0, 0), new Vector3f(10f*x.intensitate_foc, 0.8f*x.intensitate_foc, 15f*x.intensitate_foc)));
+        numeObiect.setNumParticles(1000*x.intensitate_foc);
+        numeObiect.setParticlesPerSec(100*x.intensitate_foc);
         if(x.pornit) {
             switch (x.nume_obiect) {
                 case "fire1":
@@ -333,22 +400,25 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setMaterial(mat);
         numeObiect.setImagesX(1);
         numeObiect.setImagesY(3);
-        numeObiect.setStartColor(new ColorRGBA(1f, 0.8f, 0.36f, (float) (1.0f / 1)));
-        numeObiect.setEndColor(new ColorRGBA(1f, 0.8f, 0.36f, 0f));
-        numeObiect.setInitialVelocity(new Vector3f(0, 5, 0));
-        numeObiect.setLocalTranslation(-670,-110,-130);
-        numeObiect.setStartSize(2f);
-        numeObiect.setEndSize(10f);
-        numeObiect.setFacingVelocity(true);
-        numeObiect.setParticlesPerSec(100);
+        numeObiect.setStartColor(new ColorRGBA(0.05f, 0.05f, 0.05f,0.5f));
+        numeObiect.setEndColor(new ColorRGBA(0.3f,0.3f ,0.3f, 0.5f));
+        numeObiect.setLocalTranslation((x.translatie_x-(3f*x.intensitate_foc)/2),x.translatie_y+5,(x.translatie_z-(4f*x.intensitate_foc)/2));
+        numeObiect.setInitialVelocity(new Vector3f(0, 8, 0));
         numeObiect.setGravity(0, 0, 0);
-        numeObiect.setLowLife(1.4f);
-        numeObiect.setHighLife(3.5f);
-        numeObiect.setVelocityVariation(0.1f);
+        numeObiect.setStartSize((8/(float)10)*6.6f);
+        numeObiect.setEndSize((8/(float)10)*0.5f);
+        numeObiect.setLowLife((30/(float)10)*2.5f);
+        numeObiect.setHighLife((30/(float)10)*3.5f);
+        numeObiect.setShape(new EmitterBoxShape(new Vector3f(0, 0, 0), new Vector3f(3f*30, 0.6f*30, 4f*30)));
+        numeObiect.setNumParticles(800*x.intensitate_foc);
         numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
+        numeObiect.setParticlesPerSec(100*x.intensitate_foc);
+
         if(x.pornit) {
             switch (x.nume_obiect) {
-                case "fire1":
+                case "smoketrail1":
+                    if(smoketrail1!=null)
+                        rootNode.detachChild(smoketrail1);
                     smoketrail1 = numeObiect;
                     rootNode.attachChild(smoketrail1);
                     break;
@@ -357,7 +427,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         else
         {
             switch (x.nume_obiect) {
-                case "fire1":
+                case "smoketrail1":
                     rootNode.detachChild(smoketrail1);
                     break;
             }
@@ -379,18 +449,24 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         final int SHADOWMAP_SIZE=1024;
         PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
         dlsr.setLight(lamp_light);
-        dlsr.setShadowIntensity(0.95f);
+        dlsr.setShadowIntensity(0.8f);
+
+        PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
+        dlsf.setLight(lamp_light);
 
         switch (x.nume_obiect) {
             case "light1":
                 if(light1!=null) {
                     rootNode.removeLight(light1);
                     viewPort.removeProcessor(dlsr1);
+                    dlsf.setEnabled(false);
                 }
                 light1 = lamp_light;
                 dlsr1 = dlsr;
+                dlsf1 =dlsf;
                 rootNode.addLight(light1);
                 viewPort.addProcessor(dlsr1);
+                dlsf.setEnabled(true);
                 break;
         }
 
@@ -404,13 +480,6 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
             }
         }
 
-       /* PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
-        dlsf.setLight(lamp_light);
-        dlsf.setEnabled(true);
-
-        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
-        fpp.addFilter(dlsf);
-        viewPort.addProcessor(fpp);*/
 
     }
 
@@ -511,9 +580,39 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
             cam.setLocation(new Vector3f(player.getPhysicsLocation().getX(),player.getPhysicsLocation().getY()+3,player.getPhysicsLocation().getZ()));
 
         }
+
+        float x = cam.getLocation().getX();
+        float y = cam.getLocation().getY();
+        float z = cam.getLocation().getZ();
+
+
+        if((x<1100 && x>935) && (y<180&&y>150) && (z<-1948&&z>-2164))
+            locatie = "Camera 1";
+        else if((x<1267 && x>1162) && (y<180&&y>150) && (z>-2015&&z<-1935))
+            locatie = "Camera 2";
+        else if((x<1182 && x>1077) && (y<180&&y>150) && (z>-1875&&z<-1795))
+            locatie = "Camera 3";
+        else if((x<1296 && x>1189) && (y<180&&y>150) && (z>-1860&&z<-1780))
+            locatie = "Camera 4";
+        else if((x<1267 && x>1162) && (y<148&&y>120) && (z>-2015&&z<-1935))
+            locatie = "Camera 5";
+        else if((x<1182 && x>1077) && (y<148&&y>120) && (z>-1875&&z<-1795))
+            locatie = "Camera 6";
+        else if((x<1296 && x>1189) && (y<148&&y>120) && (z>-1860&&z<-1780))
+            locatie = "Camera 7";
+        else locatie = "Neacoperita";
+
+
         hudText.setText("Coordonate:\n" + (int)cam.getLocation().getX() +"x"+ " "+(int)cam.getLocation().getY()+"y"+" "+(int)cam.getLocation().getZ()+"z");
-        hudText2.setText("Locatie:");
+        hudText2.setText("Locatie: "+locatie);
         hudText3.setText("Temperatura:\n" + environment.temperatura_interior+" °C");
+        hudText4.setText("Foc: "+ environment.foc);
+        hudText5.setText("Fum: "+environment.fum);
+        hudText6.setText("Ventilatie: "+ environment.ventilatie);
+        hudText7.setText("Sprinkler: "+ (boolean)environment.sprinkler);
+        hudText8.setText("Curent: "+ (boolean)environment.curent_electric);
+        hudText9.setText("Lumini urgenta: "+ (boolean)environment.lumini_urgenta);
+
     }
 
 

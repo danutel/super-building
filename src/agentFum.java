@@ -59,10 +59,11 @@ public class agentFum extends Agent {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    environment.ventilatie = 1;
                     environment.curent_electric = true;
                     environment.lumini_urgenta = false;
                 }
+                if(environment.fum <= 0)
+                    environment.ventilatie = 1;
 
 
                 try {

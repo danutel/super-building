@@ -2,8 +2,8 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-public class ventilatie extends Agent {
-    public double ventilatie;
+public class lumini_urgenta extends Agent {
+    public boolean lumini_urgenta;
     @Override
     public void setup(){
         addBehaviour(new Behaviour() {
@@ -11,9 +11,9 @@ public class ventilatie extends Agent {
             public void action() {
                 ACLMessage mesaj_receptionat = myAgent.receive();
                 if(mesaj_receptionat!=null) {
-                    if (mesaj_receptionat.getConversationId() == "ventilatie") {
-                        ventilatie = Double.parseDouble(mesaj_receptionat.getContent());
-                        environment.ventilatie = ventilatie;
+                    if (mesaj_receptionat.getConversationId() == "lumini_urgenta") {
+                        lumini_urgenta = Boolean.parseBoolean(mesaj_receptionat.getContent());
+                        environment.lumini_urgenta=lumini_urgenta;
                     }
                 }
             }

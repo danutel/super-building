@@ -4,8 +4,8 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 
-public class senzorTemperatura extends Agent{
-    private float temperatura;
+public class senzorUmiditate extends Agent {
+    private double umiditate = 0;
 
     @Override
     public void setup(){
@@ -13,7 +13,7 @@ public class senzorTemperatura extends Agent{
         addBehaviour(new Behaviour() {
             @Override
             public void action() {
-                temperatura= (float) environment.temperatura_interior;
+                umiditate = environment.umiditate;
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
@@ -30,14 +30,14 @@ public class senzorTemperatura extends Agent{
         addBehaviour(new Behaviour() {
             @Override
             public void action() {
-                ACLMessage mesaj_temperatura = new ACLMessage(ACLMessage.INFORM);
+                ACLMessage mesaj_umiditate = new ACLMessage(ACLMessage.INFORM);
                 Iterator it = getAID().getAllAddresses();
                 AID r = new AID("controller@"+getAID().getName().split("@")[1], AID.ISGUID);
                 r.addAddresses((String) it.next());
-                mesaj_temperatura.setConversationId("temperatura");
-                mesaj_temperatura.addReceiver(r);
-                mesaj_temperatura.setContent(String.valueOf(temperatura));
-                myAgent.send(mesaj_temperatura);
+                mesaj_umiditate.setConversationId("umiditate");
+                mesaj_umiditate.addReceiver(r);
+                mesaj_umiditate.setContent(String.valueOf(umiditate));
+                myAgent.send(mesaj_umiditate);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
