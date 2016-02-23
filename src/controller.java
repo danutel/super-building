@@ -3,6 +3,7 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
+import org.lwjgl.Sys;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,9 +46,11 @@ public class controller extends Agent {
                         fum = Boolean.parseBoolean(mesaj_receptionat.getContent());
                     }
 
-                    if(mesaj_receptionat.getConversationId()=="ospf")
+                    if(mesaj_receptionat.getConversationId().equals("lista_celule"))
                     {
-
+                        lista_celule.clear();
+                        lista_celule.add(mesaj_receptionat.getContent());
+                        System.out.println(lista_celule);
                     }
                 }
                 try {
@@ -111,7 +114,7 @@ public class controller extends Agent {
                 myAgent.send(mesaj_umidificator);
 
                 ACLMessage mesaj_server = new ACLMessage(ACLMessage.REQUEST);
-                AID rec = new AID("server@"+platforma, AID.ISGUID);
+                AID rec = new AID("server@server", AID.ISGUID);
                 rec.addAddresses(environment.adresa_server);
                 mesaj_server.setConversationId("ospf");
                 mesaj_server.addReceiver(rec);

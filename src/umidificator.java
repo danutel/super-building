@@ -15,6 +15,11 @@ public class umidificator extends Agent {
                         umidificator = Double.parseDouble(mesaj_receptionat.getContent());
                     }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

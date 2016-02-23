@@ -61,7 +61,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private PointLight light1;
     private PointLightShadowRenderer dlsr1;
     private PointLightShadowFilter dlsf1;
-    private BitmapText hudText,hudText2,hudText3,hudText4,hudText5,hudText6,hudText7,hudText8,hudText9;
+    private BitmapText hudText,hudText2,hudText3,hudText4,hudText5,hudText6,hudText7,hudText8,hudText9,hudText12,hudText13,hudText14,hudText15,hudText16,hudText17,hudText18,hudText19;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
@@ -95,7 +95,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     {
         load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
         load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-        load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "bloc",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
+        load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "map",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
        /* load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
         load_object(new requestHandler("load","Modele\\Harta\\2.zip","2.mesh.j3o", "bloc",-89,13,-314,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\7.zip","7.mesh.j3o", "bloc",2029,10,-415,7f,7f,7f,0,0,0,0));//cladiri cercetare
@@ -124,12 +124,27 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         Material mat = pic.getMaterial().clone();
         mat.setColor("Color", new ColorRGBA(1,1,1,0.8f)); // Red with 50% transparency
         mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-
         pic.setMaterial(mat);
-        pic.setWidth(settings.getWidth()/8);
-        pic.setHeight(settings.getHeight()/2);
+       // pic.setWidth(settings.getWidth()/8);
+      //  pic.setHeight(settings.getHeight()/2);
+        pic.setWidth(210);
+        pic.setHeight(360);
         pic.setPosition(0, 20);
         guiNode.attachChild(pic);
+
+        Picture pic2 = new Picture("HUD Picture");
+        assetManager.registerLocator("Modele\\Materiale\\hud1.zip", ZipLocator.class);
+        pic2.setImage(assetManager, "hud1.jpg", true);
+        Material mat2 = pic2.getMaterial().clone();
+        mat2.setColor("Color", new ColorRGBA(1,1,1,0.8f)); // Red with 50% transparency
+        mat2.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+        pic2.setMaterial(mat2);
+        // pic2.setWidth(settings.getWidth()/8);
+        //  pic2.setHeight(settings.getHeight()/2);
+        pic2.setWidth(210);
+        pic2.setHeight(360);
+        pic2.setPosition(settings.getWidth()-120, 20);
+        guiNode.attachChild(pic2);
 
         BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
         hudText = new BitmapText(myFont, false);
@@ -185,6 +200,62 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hudText9.setColor(ColorRGBA.Green);           // the text
         hudText9.setLocalTranslation(10, (settings.getHeight()/2)-220, 300); // position
         guiNode.attachChild(hudText9);
+
+        hudText12 = new BitmapText(myFont, false);
+        hudText12.setSize(15);
+        hudText12.setColor(ColorRGBA.Green);           // the text
+        hudText12.setLocalTranslation(settings.getWidth()-100, 350, 300); // position
+        hudText12.setText("Camera 1");
+        guiNode.attachChild(hudText12);
+
+        hudText13 = new BitmapText(myFont, false);
+        hudText13.setSize(15);
+        hudText13.setColor(ColorRGBA.Green);           // the text
+        hudText13.setLocalTranslation(settings.getWidth()-100, 330, 300); // position
+        hudText13.setText("Camera 2");
+        guiNode.attachChild(hudText13);
+
+        hudText14 = new BitmapText(myFont, false);
+        hudText14.setSize(15);
+        hudText14.setColor(ColorRGBA.Green);           // the text
+        hudText14.setLocalTranslation(settings.getWidth()-100, 310, 300); // position
+        hudText14.setText("Camera 3");
+        guiNode.attachChild(hudText14);
+
+        hudText15 = new BitmapText(myFont, false);
+        hudText15.setSize(15);
+        hudText15.setColor(ColorRGBA.Green);           // the text
+        hudText15.setLocalTranslation(settings.getWidth()-100, 290, 300); // position
+        hudText15.setText("Camera 4");
+        guiNode.attachChild(hudText15);
+
+        hudText16 = new BitmapText(myFont, false);
+        hudText16.setSize(15);
+        hudText16.setColor(ColorRGBA.Green);           // the text
+        hudText16.setLocalTranslation(settings.getWidth()-100, 270, 300); // position
+        hudText16.setText("Camera 5");
+        guiNode.attachChild(hudText16);
+
+        hudText17 = new BitmapText(myFont, false);
+        hudText17.setSize(15);
+        hudText17.setColor(ColorRGBA.Green);           // the text
+        hudText17.setLocalTranslation(settings.getWidth()-100, 250, 300); // position
+        hudText17.setText("Camera 6");
+        guiNode.attachChild(hudText17);
+
+        hudText18 = new BitmapText(myFont, false);
+        hudText18.setSize(15);
+        hudText18.setColor(ColorRGBA.Green);           // the text
+        hudText18.setLocalTranslation(settings.getWidth()-100, 230, 300); // position
+        hudText18.setText("Camera 7");
+        guiNode.attachChild(hudText18);
+
+        hudText19 = new BitmapText(myFont, false);
+        hudText19.setSize(15);
+        hudText19.setColor(ColorRGBA.Green);           // the text
+        hudText19.setLocalTranslation(settings.getWidth()-100, 210, 300); // position
+        hudText19.setText("server");
+        guiNode.attachChild(hudText19);
     }
 
     public  void load_player()
@@ -193,7 +264,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         player = new CharacterControl(capsuleShape, 2.5f);
         player.setJumpSpeed(20);
         player.setFallSpeed(50);
-        player.setGravity(50);
+        player.setGravity(40);
         player.setPhysicsLocation(new Vector3f(0, 10, 0));
         player.setPhysicsLocation(new Vector3f(1028,160,-2078));
         bulletAppState.getPhysicsSpace().add(player);
@@ -608,13 +679,49 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hudText3.setText("Temperatura:\n" + environment.temperatura_interior+" °C");
         hudText4.setText("Foc: "+ environment.foc);
         hudText5.setText("Fum: "+environment.fum);
-        hudText6.setText("Ventilatie: "+ environment.ventilatie);
+        String blabla = null;
+        if(environment.ventilatie==2)
+            blabla = "Trage aer";
+        if(environment.ventilatie>=-1&&environment.ventilatie<=1)
+            blabla = "Auto";
+        if(environment.ventilatie==3)
+            blabla = "Manual";
+        hudText6.setText("Ventilatie: "+ blabla);
         hudText7.setText("Sprinkler: "+ (boolean)environment.sprinkler);
-        hudText8.setText("Curent: "+ (boolean)environment.curent_electric);
-        hudText9.setText("Lumini urgenta: "+ (boolean)environment.lumini_urgenta);
+        hudText8.setText("Electricitate: "+ (boolean)environment.curent_electric);
+        hudText9.setText("L. urgenta: "+ (boolean)environment.lumini_urgenta);
 
+        if(controller.lista_celule.get(0).contains("Camera1"))
+            hudText12.setColor(ColorRGBA.Green);
+        else
+            hudText12.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera2"))
+            hudText13.setColor(ColorRGBA.Green);
+        else
+            hudText13.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera3"))
+            hudText14.setColor(ColorRGBA.Green);
+        else
+            hudText14.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera4"))
+            hudText15.setColor(ColorRGBA.Green);
+        else
+            hudText15.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera5"))
+            hudText16.setColor(ColorRGBA.Green);
+        else
+            hudText16.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera6"))
+            hudText17.setColor(ColorRGBA.Green);
+        else
+            hudText17.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("Camera7"))
+            hudText18.setColor(ColorRGBA.Green);
+        else
+            hudText18.setColor(ColorRGBA.Gray);
+        if(controller.lista_celule.get(0).contains("server"))
+            hudText19.setColor(ColorRGBA.Green);
+        else
+            hudText19.setColor(ColorRGBA.Gray);
     }
-
-
-
 }

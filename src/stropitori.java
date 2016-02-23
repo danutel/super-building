@@ -16,6 +16,11 @@ public class stropitori extends Agent {
                         environment.sprinkler=stropitori;
                     }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

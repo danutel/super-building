@@ -16,6 +16,11 @@ public class lumini_urgenta extends Agent {
                         environment.lumini_urgenta=lumini_urgenta;
                     }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

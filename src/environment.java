@@ -32,22 +32,7 @@ public class environment extends Agent{
 
     @Override
     public void setup(){
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("\nIntroduceti numele clientului: ");
-        try {
-            environment.locatie = (String) br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.print("\nIntroduceti adresa serverului: ");
-        try {
-            environment.adresa_server = (String) br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        locatie="Camera 1";
         switch (locatie){
             case "Camera 1":{X=1017;Y=181;Z=-2056;break;}
             case "Camera 2":{X=1214;Y=181;Z=-1975;break;}
@@ -88,7 +73,7 @@ public class environment extends Agent{
                 uanterior=u;
                 temperatura_interior=yk+temperatura_exterior;
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -105,7 +90,7 @@ public class environment extends Agent{
             public void action() {
                 if(foc>0)
                 {
-                    if(fum<30) {
+                    if(fum<35) {
                         fum = 5+fum + foc;
                         foc = foc + 1;
                     }
@@ -195,6 +180,12 @@ public class environment extends Agent{
                     requestHandler hf = new requestHandler("foc_start","fire1",true,foc,X,Y-32,Z);
                     graphicEngine.request.add(hf);
                 }
+                else if(foc==0 && foc!=foc_modificat)
+                {
+                    foc_modificat=foc;
+                    requestHandler hf = new requestHandler("foc_start","fire1",false,foc,X,Y-32,Z);
+                    graphicEngine.request.add(hf);
+                }
 
                 if(fum>0 && fum!=fum_modificat)
                 {
@@ -229,11 +220,6 @@ public class environment extends Agent{
                 else if(alarma_incendiu==false && alarma_incendiu_activated==true)
                 {
                     alarma_incendiu_activated=false;
-                    foc_modificat=foc;
-                    requestHandler hf = new requestHandler("foc_start","fire1",false,foc,X,Y-32,Z);
-                    graphicEngine.request.add(hf);
-
-
                 }
             }
 

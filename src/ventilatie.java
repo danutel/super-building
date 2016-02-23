@@ -16,6 +16,11 @@ public class ventilatie extends Agent {
                         environment.ventilatie = ventilatie;
                     }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
