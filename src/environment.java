@@ -1,3 +1,4 @@
+import com.jme3.math.ColorRGBA;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
@@ -29,6 +30,10 @@ public class environment extends Agent{
     private double Kp,Tp,yk,ykanterior,uanterior;
     private int X,Y,Z;
     public static String locatie;
+    public static boolean change_led=true;
+    public static int mod_leduri=0;
+    private leduri[] banda_leduri;
+    private int index = 2;
 
     @Override
     public void setup(){
@@ -60,6 +65,8 @@ public class environment extends Agent{
         graphicEngine.request.add(w4);
         requestHandler vent = new requestHandler("load","Modele/Obiecte/vent.zip","vent.j3o","vent",X,Y+2,Z-30,0.04f,0.04f,0.04f,0,0,0,0);
         graphicEngine.request.add(vent);
+
+
 
         Kp=0.3704;
         Tp=0.9753;
@@ -220,6 +227,11 @@ public class environment extends Agent{
                 else if(alarma_incendiu==false && alarma_incendiu_activated==true)
                 {
                     alarma_incendiu_activated=false;
+                }
+
+                if(change_led)
+                {
+
                 }
             }
 

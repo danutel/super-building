@@ -18,9 +18,11 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
+import com.jme3.light.SpotLight;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.SceneProcessor;
@@ -30,15 +32,15 @@ import com.jme3.post.filters.LightScatteringFilter;
 import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
-import com.jme3.shadow.PointLightShadowFilter;
-import com.jme3.shadow.PointLightShadowRenderer;
-import com.jme3.shadow.PssmShadowRenderer;
+import com.jme3.shadow.*;
 import com.jme3.ui.Picture;
 import com.jme3.util.SkyFactory;
 
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class graphicEngine extends SimpleApplication implements ActionListener{
@@ -48,7 +50,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
     private BulletAppState bulletAppState;
     private CharacterControl player;
-    private Spatial map,bloc;
+    private Spatial map,bloc,led;
     private Spatial bec;
     private Spatial detector_fum;
     private Spatial stropitoare;
@@ -61,6 +63,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private PointLight light1;
     private PointLightShadowRenderer dlsr1;
     private PointLightShadowFilter dlsf1;
+    private SpotLightShadowRenderer[] dlsr_led=new SpotLightShadowRenderer[61];
+    private SpotLightShadowFilter[] dlsf_led=new  SpotLightShadowFilter[61];
     private BitmapText hudText,hudText2,hudText3,hudText4,hudText5,hudText6,hudText7,hudText8,hudText9,hudText12,hudText13,hudText14,hudText15,hudText16,hudText17,hudText18,hudText19;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
@@ -69,6 +73,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private int intensitate_fum=0;
     private String locatie = "";
     public static List<requestHandler> request = new ArrayList<requestHandler>();
+    private SpotLight[] lumina_leduri = new SpotLight[61];
 
     @Override
     public void simpleInitApp() {
@@ -93,8 +98,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     public void loadmap()
     {
-        load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-        load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+       // load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
+       // load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
         load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "map",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
        /* load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
         load_object(new requestHandler("load","Modele\\Harta\\2.zip","2.mesh.j3o", "bloc",-89,13,-314,7f,7f,7f,0,0,0,0));//cladiri cercetare
@@ -113,6 +118,25 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare*/
+
+        for(int i = 1288;i>=869;i=i-22)
+        {
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",i,149.8f,-1907,1f,1f,1f,0,0,0,0));
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",i,117.2f,-1907,1f,1f,1f,0,0,0,0));
+        }
+
+        for(int i = 1912;i<=1979;i=i+22)
+        {
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",867,149.8f,-i,1f,1f,1f,0,1.57f,0,0));
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",867,117.2f,-i,1f,1f,1f,0,1.57f,0,0));
+        }
+
+        for(int i = 1806;i<=1920;i=i+22)
+        {
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",1010,149.8f,-i,1f,1f,1f,0,1.57f,0,0));
+            load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",1010,117.2f,-i,1f,1f,1f,0,1.57f,0,0));
+        }
+
     }
 
     public void load_hud(){
@@ -278,13 +302,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void lightSetup()
     {
         PointLight lamp_light2 = new PointLight();
-        lamp_light2.setColor(ColorRGBA.White.mult(0.4f));
+        lamp_light2.setColor(ColorRGBA.White.mult(0.2f));
         lamp_light2.setRadius(100000);
         lamp_light2.setPosition(new Vector3f(-5000,5000,5000));
         rootNode.addLight(lamp_light2);
 
         PointLight lamp_light = new PointLight();
-        lamp_light.setColor(ColorRGBA.White.mult(1.7f));
+        lamp_light.setColor(ColorRGBA.White.mult(0.7f));
         lamp_light.setRadius(100000);
         lamp_light.setPosition(new Vector3f(5000,5000,-5000));
 
@@ -361,6 +385,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
 
     public void hud(){
+
+    }
+
+    public void load_leds()
+    {
+        load_object(new requestHandler("load","Modele\\Harta\\spot.zip","bec2.j3o", "map",1050,149.8f,-2078,1f,1f,1f,0,0,0,0));
+
 
     }
 
@@ -507,37 +538,69 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     public void load_light(requestHandler x) {
         PointLight lamp_light = new PointLight();
-        if(x.alarma)
-        {
-            lamp_light.setColor(ColorRGBA.Red.mult(x.intensitate_lumina));
-        }
-        else {
-            lamp_light.setColor(ColorRGBA.White.mult(x.intensitate_lumina));
-        }
-        lamp_light.setRadius(x.suprafata);
-        lamp_light.setPosition(new Vector3f(x.translatie_x,x.translatie_y,x.translatie_z));
-
-        final int SHADOWMAP_SIZE=1024;
+        final int SHADOWMAP_SIZE = 1024;
         PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
-        dlsr.setLight(lamp_light);
-        dlsr.setShadowIntensity(0.8f);
-
         PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
-        dlsf.setLight(lamp_light);
+        lamp_light.setRadius(x.suprafata);
+        lamp_light.setPosition(new Vector3f(x.translatie_x, x.translatie_y, x.translatie_z));
+
+
+        if(x.nume_obiect.equals("led"))
+        {
+
+
+            if(x.pornit==false && lumina_leduri[x.index]!=null)
+            {
+                    rootNode.removeLight(lumina_leduri[x.index]);
+                    viewPort.removeProcessor(dlsr_led[x.index]);
+                    dlsf_led[x.index].setEnabled(false);
+            }
+            else
+            {
+                lumina_leduri[x.index] = new SpotLight();
+                dlsr_led[x.index]=new SpotLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
+                dlsf_led[x.index]=new SpotLightShadowFilter(assetManager, SHADOWMAP_SIZE);
+
+                lumina_leduri[x.index].setColor(x.culoare.mult(x.intensitate_lumina));
+                lumina_leduri[x.index].setSpotRange(x.suprafata);
+                lumina_leduri[x.index].setPosition(new Vector3f(x.translatie_x, x.translatie_y, x.translatie_z));
+                lumina_leduri[x.index].setDirection(new Vector3f(0, -1, 0));
+                lumina_leduri[x.index].setSpotInnerAngle(10f * FastMath.DEG_TO_RAD);
+                lumina_leduri[x.index].setSpotOuterAngle(85f * FastMath.DEG_TO_RAD);
+                dlsr_led[x.index].setLight(lumina_leduri[x.index]);
+                dlsr_led[x.index].setShadowIntensity(0.8f);
+                dlsf_led[x.index].setLight(lumina_leduri[x.index]);
+
+                rootNode.addLight(lumina_leduri[x.index]);
+                viewPort.addProcessor(dlsr_led[x.index]);
+                dlsf_led[x.index].setEnabled(true);
+            }
+        }
+        else
+        {
+            if (x.alarma) {
+                lamp_light.setColor(ColorRGBA.Red.mult(x.intensitate_lumina));
+            } else {
+                lamp_light.setColor(ColorRGBA.White.mult(x.intensitate_lumina));
+            }
+            dlsr.setLight(lamp_light);
+            dlsr.setShadowIntensity(0.8f);
+            dlsf.setLight(lamp_light);
+        }
 
         switch (x.nume_obiect) {
             case "light1":
                 if(light1!=null) {
                     rootNode.removeLight(light1);
                     viewPort.removeProcessor(dlsr1);
-                    dlsf.setEnabled(false);
+                    dlsf1.setEnabled(false);
                 }
                 light1 = lamp_light;
                 dlsr1 = dlsr;
                 dlsf1 =dlsf;
                 rootNode.addLight(light1);
                 viewPort.addProcessor(dlsr1);
-                dlsf.setEnabled(true);
+                dlsf1.setEnabled(true);
                 break;
         }
 
@@ -628,6 +691,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                     break;
                 case "smoke": smoke(x);
                     break;
+                case "leduri": load_light(x);
             }
             request.remove(0);
         }
@@ -655,7 +719,6 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         float x = cam.getLocation().getX();
         float y = cam.getLocation().getY();
         float z = cam.getLocation().getZ();
-
 
         if((x<1100 && x>935) && (y<180&&y>150) && (z<-1948&&z>-2164))
             locatie = "Camera 1";
@@ -691,6 +754,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hudText8.setText("Electricitate: "+ (boolean)environment.curent_electric);
         hudText9.setText("L. urgenta: "+ (boolean)environment.lumini_urgenta);
 
+        /*
         if(controller.lista_celule.get(0).contains("Camera1"))
             hudText12.setColor(ColorRGBA.Green);
         else
@@ -718,10 +782,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         if(controller.lista_celule.get(0).contains("Camera7"))
             hudText18.setColor(ColorRGBA.Green);
         else
-            hudText18.setColor(ColorRGBA.Gray);
+            hudText18.setColor(ColorRGBA.Gray);*/
         if(controller.lista_celule.get(0).contains("server"))
             hudText19.setColor(ColorRGBA.Green);
         else
             hudText19.setColor(ColorRGBA.Gray);
+
+
     }
 }
