@@ -1,6 +1,8 @@
 import com.jme3.math.ColorRGBA;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,19 +35,21 @@ public class environment extends Agent{
     public static boolean change_led=true;
     public static int mod_leduri=0;
     private leduri[] banda_leduri;
-    private int index = 2;
+    private int index;
 
     @Override
     public void setup(){
-        locatie="Camera 1";
+
+        locatie = getAID().getName().split("@")[1];
+
         switch (locatie){
-            case "Camera 1":{X=1017;Y=181;Z=-2056;break;}
-            case "Camera 2":{X=1214;Y=181;Z=-1975;break;}
-            case "Camera 3":{X=1129;Y=181;Z=-1835;break;}
-            case "Camera 4":{X=1242;Y=181;Z=-1820;break;}
-            case "Camera 5":{X=1214;Y=149;Z=-1975;break;}
-            case "Camera 6":{X=1129;Y=181;Z=-1835;break;}
-            case "Camera 7":{X=1242;Y=181;Z=-1820;break;}
+            case "server":{X=1017;Y=181;Z=-2056;index=1;break;}
+            case "Camera 2":{X=1214;Y=181;Z=-1975;index=2;break;}
+            case "Camera 3":{X=1129;Y=181;Z=-1835;index=3;break;}
+            case "Camera 4":{X=1242;Y=181;Z=-1820;index=4;break;}
+            case "Camera 5":{X=1214;Y=149;Z=-1975;index=5;break;}
+            case "Camera 6":{X=1129;Y=181;Z=-1835;index=6;break;}
+            case "Camera 7":{X=1242;Y=181;Z=-1820;index=7;break;}
             default: {X=0;Y=0;Z=0;}
         }
 
@@ -53,7 +57,7 @@ public class environment extends Agent{
         graphicEngine.request.add(x);
         requestHandler y = new requestHandler("load","Modele/Obiecte/bec.zip","bec.j3o","bec",X,Y-1,Z,1,1,1,0,0,0,0);
         graphicEngine.request.add(y);
-        requestHandler z = new requestHandler("light","light1",true,false,3f,100f,X,Y-10,Z);
+        requestHandler z = new requestHandler("light",index,true,false,3f,200f,X,Y-10,Z);
         graphicEngine.request.add(z);
         requestHandler w  = new requestHandler("load","Modele/Obiecte/stropitoare.zip","stropitoare.j3o","stropitoare",X-25,Y-1,Z-25,0.04f,0.04f,0.04f,0,0,0,0);
         graphicEngine.request.add(w);
@@ -105,8 +109,8 @@ public class environment extends Agent{
 
                 if(ventilatie==2)
                 {
-                    if(fum>=3)
-                        fum=fum-3;
+                    if(fum>=4)
+                        fum=fum-4;
                     else
                         fum=0;
                 }
@@ -137,86 +141,97 @@ public class environment extends Agent{
             @Override
             public void action() {
 
-                if(sprinkler== true && sprinkler_activated==false)
-                {
-                    sprinkler_activated=true;
-                    requestHandler sprink = new requestHandler("stropire","water1",true,X-25,Y-2,Z-25);
+                if (sprinkler == true && sprinkler_activated == false) {
+                    sprinkler_activated = true;
+                    requestHandler sprink = new requestHandler("stropire", index, true, X - 25, (int)Y - 2, Z - 25);
                     graphicEngine.request.add(sprink);
 
-                    requestHandler sprink2 = new requestHandler("stropire","water2",true,X-25,Y-2,Z+25);
+                    requestHandler sprink2 = new requestHandler("stropire", index+1, true, X - 25, (int)Y - 2, Z + 25);
                     graphicEngine.request.add(sprink2);
 
-                    requestHandler sprink3 = new requestHandler("stropire","water3",true,X+25,Y-2,Z-25);
+                    requestHandler sprink3 = new requestHandler("stropire", index+2, true, X + 25, (int)Y - 2, Z - 25);
                     graphicEngine.request.add(sprink3);
 
-                    requestHandler sprink4 = new requestHandler("stropire","water4",true,X+25,Y-2,Z+25);
+                    requestHandler sprink4 = new requestHandler("stropire", index+3, true, X + 25, (int)Y - 2, Z + 25);
                     graphicEngine.request.add(sprink4);
-                }
-                else if(sprinkler== false && sprinkler_activated==true)
-                {
-                    sprinkler_activated=false;
-                    requestHandler h = new requestHandler("stropire","water1",false,X-20,Y-2,Z-28);
+                } else if (sprinkler == false && sprinkler_activated == true) {
+                    sprinkler_activated = false;
+                    requestHandler h = new requestHandler("stropire", index, false, X - 20, (int)Y - 2, Z - 28);
                     graphicEngine.request.add(h);
 
-                    requestHandler h2 = new requestHandler("stropire","water2",false,X-20,Y-2,Z-28);
+                    requestHandler h2 = new requestHandler("stropire", index+1, false, X - 20, (int)Y - 2, Z - 28);
                     graphicEngine.request.add(h2);
 
-                    requestHandler h3 = new requestHandler("stropire","water3",false,X-20,Y-2,Z-28);
+                    requestHandler h3 = new requestHandler("stropire", index+2, false, X - 20, (int)Y - 2, Z - 28);
                     graphicEngine.request.add(h3);
 
-                    requestHandler h4 = new requestHandler("stropire","water4",false,X-20,Y-2,Z-28);
+                    requestHandler h4 = new requestHandler("stropire", index+3, false, X - 20, (int)Y - 2, Z - 28);
                     graphicEngine.request.add(h4);
                 }
 
                 if(curent_electric==false && curent_electric_activated==true)
                 {
                     curent_electric_activated=false;
-                    requestHandler z = new requestHandler("light","light1",false,false,3f,100f,X,Y-10,Z);
+                    requestHandler z = new requestHandler("light",index,false,false,1.5f,200f,X,Y-10,Z);
                     graphicEngine.request.add(z);
                 }
                 else if(curent_electric==true && curent_electric_activated==false)
                 {
                     curent_electric_activated=true;
-                    requestHandler z = new requestHandler("light","light1",true,false,3f,100f,X,Y-10,Z);
+                    requestHandler z1 = new requestHandler("light",index,false,false,1.5f,200f,X,Y-10,Z);
+                    graphicEngine.request.add(z1);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    requestHandler z = new requestHandler("light",index,true,false,1.5f,200f,X,Y-10,Z);
                     graphicEngine.request.add(z);
                 }
 
                 if(foc>0 && foc!=foc_modificat)
                 {
                     foc_modificat=foc;
-                    requestHandler hf = new requestHandler("foc_start","fire1",true,foc,X,Y-32,Z);
+                    requestHandler hf = new requestHandler("foc_start",index,true,foc,X,Y-32,Z);
                     graphicEngine.request.add(hf);
                 }
                 else if(foc==0 && foc!=foc_modificat)
                 {
                     foc_modificat=foc;
-                    requestHandler hf = new requestHandler("foc_start","fire1",false,foc,X,Y-32,Z);
+                    requestHandler hf = new requestHandler("foc_start",index,false,foc,X,Y-32,Z);
                     graphicEngine.request.add(hf);
                 }
 
                 if(fum>0 && fum!=fum_modificat)
                 {
                     fum_modificat=fum;
-                    requestHandler hf = new requestHandler("smoke","smoketrail1",true,fum,X,Y-32,Z);
+                    requestHandler hf = new requestHandler("smoke",index,true,fum,X,Y-32,Z);
                     graphicEngine.request.add(hf);
                 }
                 else if(fum==0 && fum!=fum_modificat)
                 {
                     fum_modificat=fum;
-                    requestHandler hf2 = new requestHandler("smoke","smoketrail1",false,fum,X,Y-32,Z);
+                    requestHandler hf2 = new requestHandler("smoke",index,false,fum,X,Y-32,Z);
                     graphicEngine.request.add(hf2);
                 }
 
                 if(lumini_urgenta==true && lumini_urgenta_activated==false)
                 {
                     lumini_urgenta_activated=true;
-                    requestHandler z = new requestHandler("light","light1",true,true,3f,100f,X,Y-10,Z);
+                    requestHandler z1 = new requestHandler("light",index,false,false,1.5f,200f,X,Y-10,Z);
+                    graphicEngine.request.add(z1);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    requestHandler z = new requestHandler("light",index,true,true,1.5f,200f,X,Y-10,Z);
                     graphicEngine.request.add(z);
                 }
                 else if (lumini_urgenta==false && lumini_urgenta_activated==true)
                 {
                     lumini_urgenta_activated=false;
-                    requestHandler z = new requestHandler("light","light1",true,false,3f,100f,X,Y-10,Z);
+                    requestHandler z = new requestHandler("light",index,true,false,1.5f,200f,X,Y-10,Z);
                     graphicEngine.request.add(z);
                 }
 
@@ -227,11 +242,6 @@ public class environment extends Agent{
                 else if(alarma_incendiu==false && alarma_incendiu_activated==true)
                 {
                     alarma_incendiu_activated=false;
-                }
-
-                if(change_led)
-                {
-
                 }
             }
 

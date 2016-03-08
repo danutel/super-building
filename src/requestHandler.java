@@ -43,7 +43,7 @@ public class requestHandler {
         this.masa = masa;
     }
 
-    public requestHandler(String type, String nume_obiect, boolean pornit, boolean alarma, float intensitate_lumina, float suprafata, int translatie_x, int translatie_y, int translatie_z) {
+    public requestHandler(String type, int index, boolean pornit, boolean alarma, float intensitate_lumina, float suprafata, int translatie_x, int translatie_y, int translatie_z) {
         this.translatie_x = translatie_x;
         this.translatie_y = translatie_y;
         this.translatie_z = translatie_z;
@@ -51,26 +51,26 @@ public class requestHandler {
         this.pornit = pornit;
         this.intensitate_lumina = intensitate_lumina;
         this.suprafata = suprafata;
-        this.nume_obiect = nume_obiect;
+        this.index = index;
         this.alarma = alarma;
     }
 
-    public requestHandler(String type, String nume_obiect, boolean pornit, int translatie_x, int translatie_y, int translatie_z) {
+    public requestHandler(String type, int index, boolean pornit, int translatie_x, int translatie_y, int translatie_z) {
         this.translatie_x = translatie_x;
         this.translatie_y = translatie_y;
         this.translatie_z = translatie_z;
         this.type = type;
         this.pornit = pornit;
-        this.nume_obiect = nume_obiect;
+        this.index=index;
     }
 
-    public requestHandler(String type, String nume_obiect, boolean pornit, int intensitate, int translatie_x, int translatie_y, int translatie_z) {
+    public requestHandler(String type, int index, boolean pornit, int intensitate, int translatie_x, int translatie_y, int translatie_z) {
         this.translatie_x = translatie_x;
         this.translatie_y = translatie_y;
         this.translatie_z = translatie_z;
         this.type = type;
         this.pornit = pornit;
-        this.nume_obiect = nume_obiect;
+        this.index=index;
         this.intensitate_foc = intensitate;
     }
 

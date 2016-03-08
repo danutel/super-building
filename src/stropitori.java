@@ -15,6 +15,14 @@ public class stropitori extends Agent {
                         stropitori = Boolean.parseBoolean(mesaj_receptionat.getContent());
                         environment.sprinkler=stropitori;
                     }
+
+                    if (mesaj_receptionat.getConversationId() == "stropitori[]") {
+                        String[] ceva = mesaj_receptionat.getContent().split("~");
+                        for(int i = 0;i<6;i++)
+                        {
+                            environment_hol.sprinkler[i]= Boolean.parseBoolean(ceva[i]);
+                        }
+                    }
                 }
                 try {
                     Thread.sleep(100);

@@ -15,6 +15,14 @@ public class lumini_urgenta extends Agent {
                         lumini_urgenta = Boolean.parseBoolean(mesaj_receptionat.getContent());
                         environment.lumini_urgenta=lumini_urgenta;
                     }
+
+                    if (mesaj_receptionat.getConversationId() == "lumini_urgenta[]") {
+                        String[] ceva = mesaj_receptionat.getContent().split("~");
+                        for(int i = 0;i<6;i++)
+                        {
+                            environment_hol.lumini_urgenta[i]= Boolean.parseBoolean(ceva[i]);
+                        }
+                    }
                 }
                 try {
                     Thread.sleep(100);

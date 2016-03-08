@@ -15,6 +15,14 @@ public class electricitate extends Agent {
                         electricitate = Boolean.parseBoolean(mesaj_receptionat.getContent());
                         environment.curent_electric=electricitate;
                     }
+
+                    if (mesaj_receptionat.getConversationId() == "electricitate[]") {
+                        String[] ceva = mesaj_receptionat.getContent().split("~");
+                        for(int i = 0;i<6;i++)
+                        {
+                            environment_hol.curent_electric[i]= Boolean.parseBoolean(ceva[i]);
+                        }
+                    }
                 }
                 try {
                     Thread.sleep(100);

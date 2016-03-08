@@ -1,6 +1,7 @@
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
+import org.lwjgl.Sys;
 
 public class ventilatie extends Agent {
     public double ventilatie;
@@ -14,6 +15,14 @@ public class ventilatie extends Agent {
                     if (mesaj_receptionat.getConversationId() == "ventilatie") {
                         ventilatie = Double.parseDouble(mesaj_receptionat.getContent());
                         environment.ventilatie = ventilatie;
+                    }
+
+                    if (mesaj_receptionat.getConversationId() == "ventilatie[]") {
+                        String[] ceva = mesaj_receptionat.getContent().split("~");
+                        for(int i = 0;i<6;i++)
+                        {
+                            environment_hol.ventilatie[i]= Double.parseDouble(ceva[i]);
+                        }
                     }
                 }
                 try {

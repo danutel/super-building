@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/graphicEngine.java" line="722" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/src/graphicEngine.java" line="720" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6cbd583c-94f0-447f-a77f-43946ebdffce" name="Default" comment="" />
@@ -25,45 +25,75 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="leduri.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/leduri.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="environment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="233" column="0" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="directionare.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/directionare.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="96" column="20" selection-start-line="96" selection-start-column="20" selection-end-line="99" selection-end-column="0" />
+              <caret line="107" column="17" selection-start-line="107" selection-start-column="17" selection-end-line="107" selection-end-column="17" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3505#3506#0" expanded="true" />
-                <element signature="e#3549#3550#0" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#4040#4041#0" expanded="false" />
+                <element signature="e#4084#4085#0" expanded="false" />
+                <element signature="e#5027#5028#0" expanded="false" />
+                <element signature="e#5071#5072#0" expanded="false" />
+                <element signature="e#10312#10313#0" expanded="false" />
+                <element signature="e#10356#10357#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graphicEngine.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="controller_hol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller_hol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="82" column="47" selection-start-line="82" selection-start-column="47" selection-end-line="82" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6256#6257#0" expanded="true" />
+                <element signature="e#6300#6301#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="141" column="34" selection-start-line="141" selection-start-column="34" selection-end-line="141" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graphicEngine.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/graphicEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0663265">
-              <caret line="784" column="49" selection-start-line="784" selection-start-column="49" selection-end-line="784" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="741" column="55" selection-start-line="741" selection-start-column="55" selection-end-line="741" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="environment_hol.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/environment_hol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="6.0136056">
+              <caret line="208" column="39" selection-start-line="208" selection-start-column="39" selection-end-line="208" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requestHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/requestHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -92,21 +122,24 @@
         <option value="$PROJECT_DIR$/src/unAgent.java" />
         <option value="$PROJECT_DIR$/src/agentFum.java" />
         <option value="$PROJECT_DIR$/src/senzorUmiditate.java" />
-        <option value="$PROJECT_DIR$/src/senzorTemperatura.java" />
         <option value="$PROJECT_DIR$/src/eveniment.java" />
-        <option value="$PROJECT_DIR$/src/electricitate.java" />
-        <option value="$PROJECT_DIR$/src/ventilatie.java" />
         <option value="$PROJECT_DIR$/src/umidificator.java" />
-        <option value="$PROJECT_DIR$/src/lumini_urgenta.java" />
         <option value="$PROJECT_DIR$/src/server.java" />
         <option value="$PROJECT_DIR$/src/senzorFum.java" />
-        <option value="$PROJECT_DIR$/src/stropitori.java" />
-        <option value="$PROJECT_DIR$/src/controller.java" />
-        <option value="$PROJECT_DIR$/src/environment.java" />
-        <option value="$PROJECT_DIR$/src/requestHandler.java" />
         <option value="$PROJECT_DIR$/src/leduri.java" />
         <option value="$PROJECT_DIR$/src/directionare.java" />
+        <option value="$PROJECT_DIR$/src/requestHandler.java" />
+        <option value="$PROJECT_DIR$/src/environment.java" />
+        <option value="$PROJECT_DIR$/src/senzorTemperatura.java" />
+        <option value="$PROJECT_DIR$/src/ventilatie.java" />
+        <option value="$PROJECT_DIR$/src/stropitori.java" />
+        <option value="$PROJECT_DIR$/src/senzorFum_hol.java" />
+        <option value="$PROJECT_DIR$/src/electricitate.java" />
+        <option value="$PROJECT_DIR$/src/lumini_urgenta.java" />
         <option value="$PROJECT_DIR$/src/graphicEngine.java" />
+        <option value="$PROJECT_DIR$/src/environment_hol.java" />
+        <option value="$PROJECT_DIR$/src/controller.java" />
+        <option value="$PROJECT_DIR$/src/controller_hol.java" />
       </list>
     </option>
   </component>
@@ -142,6 +175,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -176,7 +210,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -454,7 +487,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="jade.Boot" />
       <option name="VM_PARAMETERS" value="-Xms6048m" />
-      <option name="PROGRAM_PARAMETERS" value="-platform-id server -agents server:server;agent2:unAgent;god:environment;senzorT:senzorTemperatura;senzorU:senzorUmiditate;senzorF:senzorFum;controller:controller;ventilatie:ventilatie;stropitori:stropitori;directionare:directionare;umidificator:umidificator;electricitate:electricitate;lumini_urgenta:lumini_urgenta;" />
+      <option name="PROGRAM_PARAMETERS" value="-platform-id server -agents server:server;ventilatie:ventilatie;stropitori:stropitori;agent2:unAgent;senzorFum_hol:senzorFum_hol;environment_hol:environment_hol;controller_hol:controller_hol;electricitate:electricitate;lumini_urgenta:lumini_urgenta;directionare:directionare;" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -497,10 +530,10 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32586786" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31019038" sideWeight="0.502445" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31019038" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31019038" sideWeight="0.49755502" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16381419" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -534,7 +567,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="61" />
+      <option name="time" value="75" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -543,62 +576,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/export/binary/BinaryImporter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36721992">
-          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/asset/DesktopAssetManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8609958">
-          <caret line="281" column="0" selection-start-line="281" selection-start-column="0" selection-end-line="281" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/math/FastMath.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35062242">
-          <caret line="218" column="24" selection-start-line="218" selection-start-column="24" selection-end-line="218" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/export/binary/ByteUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49170125">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/asset/AssetKey.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2614108">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/asset/ImplHandler.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47302905">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/asset/plugins/ZipLocator.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89626557">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jME3-core.jar!/com/jme3/asset/AssetInfo.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6348548">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/jME3-jbullet.jar!/com/jme3/bullet/BulletAppState.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.259259">
@@ -624,14 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47302905">
           <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_72/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="744" column="0" selection-start-line="744" selection-start-column="0" selection-end-line="744" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -726,36 +695,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0867347">
-          <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ventilatie.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5782313">
-          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/production/super-building/agentFum.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.45454547">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/senzorTemperatura.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.044217687">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -833,10 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.6296296">
           <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
-          <folding>
-            <element signature="e#710#711#0" expanded="true" />
-            <element signature="e#737#738#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -844,15 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.9259257">
           <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding>
-            <element signature="e#885#886#0" expanded="true" />
-            <element signature="e#938#939#0" expanded="true" />
-            <element signature="e#1158#1159#0" expanded="true" />
-            <element signature="e#1207#1208#0" expanded="true" />
-            <element signature="e#1332#1333#0" expanded="true" />
-            <element signature="e#1384#1385#0" expanded="true" />
-            <element signature="e#2204#2205#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -860,15 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.703704">
           <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jade.jar!/jade/core/Agent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.074074">
-          <caret line="858" column="0" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -876,22 +797,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.8888889">
           <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding>
-            <element signature="e#2934#2935#0" expanded="true" />
-            <element signature="e#2973#2974#0" expanded="true" />
-            <element signature="e#3779#3780#0" expanded="true" />
-            <element signature="e#3821#3822#0" expanded="true" />
-            <element signature="e#4581#4582#0" expanded="true" />
-            <element signature="e#4613#4614#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/requestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -903,19 +808,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="233" column="0" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_72/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="652" column="0" selection-start-line="652" selection-start-column="0" selection-end-line="652" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -923,19 +819,146 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="96" column="20" selection-start-line="96" selection-start-column="20" selection-end-line="99" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/jade.jar!/jade/core/Agent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.259259">
+          <caret line="267" column="21" selection-start-line="267" selection-start-column="21" selection-end-line="267" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/jade.jar!/jade/core/AID.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.259259">
+          <caret line="82" column="18" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_72/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28741497">
+          <caret line="744" column="0" selection-start-line="744" selection-start-column="0" selection-end-line="744" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/senzorTemperatura.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6360544">
+          <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="107" column="17" selection-start-line="107" selection-start-column="17" selection-end-line="107" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3505#3506#0" expanded="true" />
-            <element signature="e#3549#3550#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4040#4041#0" expanded="false" />
+            <element signature="e#4084#4085#0" expanded="false" />
+            <element signature="e#5027#5028#0" expanded="false" />
+            <element signature="e#5071#5072#0" expanded="false" />
+            <element signature="e#10312#10313#0" expanded="false" />
+            <element signature="e#10356#10357#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/senzorFum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35144508">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/stropitori.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6360544">
+          <caret line="24" column="21" selection-start-line="18" selection-start-column="20" selection-end-line="24" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/senzorFum_hol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56632656">
+          <caret line="50" column="59" selection-start-line="50" selection-start-column="59" selection-end-line="50" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ventilatie.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4217687">
+          <caret line="25" column="21" selection-start-line="19" selection-start-column="20" selection-end-line="25" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/electricitate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5782313">
+          <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lumini_urgenta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5782313">
+          <caret line="22" column="84" selection-start-line="22" selection-start-column="84" selection-end-line="22" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/graphicEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0663265">
-          <caret line="784" column="49" selection-start-line="784" selection-start-column="49" selection-end-line="784" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="741" column="55" selection-start-line="741" selection-start-column="55" selection-end-line="741" selection-end-column="55" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/requestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller_hol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="47" selection-start-line="82" selection-start-column="47" selection-end-line="82" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6256#6257#0" expanded="true" />
+            <element signature="e#6300#6301#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="141" column="34" selection-start-line="141" selection-start-column="34" selection-end-line="141" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environment_hol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.0136056">
+          <caret line="208" column="39" selection-start-line="208" selection-start-column="39" selection-end-line="208" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

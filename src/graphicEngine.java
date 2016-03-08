@@ -57,14 +57,20 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private Spatial vent;
     private Spatial barbat1;
     private Spatial femeie1;
-    private ParticleEmitter smoketrail1;
-    private ParticleEmitter water1,water2,water3,water4;
-    private ParticleEmitter fire1;
-    private PointLight light1;
-    private PointLightShadowRenderer dlsr1;
-    private PointLightShadowFilter dlsf1;
+    //private ParticleEmitter smoketrail1;
+    //private ParticleEmitter water1,water2,water3,water4;
+    //private ParticleEmitter fire1;
+    //private PointLight light1,light2,light3,light4,light5,light6,light7;
+    //private PointLightShadowRenderer dlsr1,dlsr2,dlsr3,dlsr4,dlsr5,dlsr6,dlsr7;
+    //private PointLightShadowFilter dlsf1,dlsf2,dlsf3,dlsf4,dlsf5,dlsf6,dlsf7;
+    private PointLight [] light = new PointLight[21];
+    private PointLightShadowRenderer [] dlsr = new PointLightShadowRenderer[21];
+    private PointLightShadowFilter [] dlsf = new PointLightShadowFilter[21];
     private SpotLightShadowRenderer[] dlsr_led=new SpotLightShadowRenderer[61];
     private SpotLightShadowFilter[] dlsf_led=new  SpotLightShadowFilter[61];
+    private ParticleEmitter [] fire = new ParticleEmitter[21];
+    private ParticleEmitter [] water = new ParticleEmitter[61];
+    private ParticleEmitter [] smoke = new ParticleEmitter[21];
     private BitmapText hudText,hudText2,hudText3,hudText4,hudText5,hudText6,hudText7,hudText8,hudText9,hudText12,hudText13,hudText14,hudText15,hudText16,hudText17,hudText18,hudText19;
     private boolean left = false, right = false, up = false, down = false,camera=false,tp=false;
     private Vector3f camDir = new Vector3f();
@@ -98,22 +104,17 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
 
     public void loadmap()
     {
-       // load_object(new requestHandler("load","Modele\\Harta\\6.zip","6.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-       // load_object(new requestHandler("load","Modele\\Harta\\3.zip","3.mesh.j3o", "map",-420,1,-110,7f,7f,7f,0,0,0,0));//harta
-        load_object(new requestHandler("load","Modele\\Harta\\1.zip","1.mesh.j3o", "map",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
-       /* load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
-        load_object(new requestHandler("load","Modele\\Harta\\2.zip","2.mesh.j3o", "bloc",-89,13,-314,7f,7f,7f,0,0,0,0));//cladiri cercetare
-        load_object(new requestHandler("load","Modele\\Harta\\7.zip","7.mesh.j3o", "bloc",2029,10,-415,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        //load_object(new requestHandler("load","Modele\\Harta\\fac.zip","6.mesh.j3o", "map",-420,0,-109,7f,7f,7f,0,0,0,0));//harta
+        load_object(new requestHandler("load","Modele\\Harta\\fac.zip","1.mesh.j3o", "map",-144,14,-1637,7f,7f,7f,0,0,0,0));//facultate
+        //load_object(new requestHandler("load","Modele\\Harta\\9.zip","9.mesh.j3o", "bloc",81,-12,-2603,7f,7f,7f,0,0,0,0));//parcare+terenuri
+       /* load_object(new requestHandler("load","Modele\\Harta\\7.zip","7.mesh.j3o", "bloc",2029,10,-415,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\8.zip","8.mesh.j3o", "bloc",1750,10,-2600,7f,7f,7f,0,0,0,0));//cladiri cercetare
-        load_object(new requestHandler("load","Modele\\Harta\\5.zip","5.mesh.j3o", "bloc",920,13,-360,7f,7f,7f,0,0,0,0));//parc+stadion
-        load_object(new requestHandler("load","Modele\\Harta\\5.zip","51.mesh.j3o", "bloc",1470,13,-960,7f,7f,7f,0,0,0,0));//parc+stadion
-        load_object(new requestHandler("load","Modele\\Harta\\5.zip","52.mesh.j3o", "bloc",550,13,-1500,7f,7f,7f,0,0,0,0));//parc+stadion
-        load_object(new requestHandler("load","Modele\\Harta\\5.zip","53.mesh.j3o", "bloc",0,13,-910,7f,7f,7f,0,0,0,0));//parc+stadion
+        load_object(new requestHandler("load","Modele\\Harta\\fac.zip","5.mesh.j3o", "bloc",-150,12,-280,7f,7f,7f,0,0,0,0));//parc+stadion
         load_object(new requestHandler("load","Modele\\Harta\\12.zip","12.mesh.j3o", "bloc",270,8,-489,7f,7f,7f,0,0,0,0));//harta
         load_object(new requestHandler("load","Modele\\Harta\\13.zip","13.mesh.j3o", "bloc",270,8,-489,7f,7f,7f,0,0,0,0));//harta
         load_object(new requestHandler("load","Modele\\Harta\\14.zip","14.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\15.zip","15.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
-        load_object(new requestHandler("load","Modele\\Harta\\16.zip","16.mesh.j3o", "bloc",2000,10,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
+        load_object(new requestHandler("load","Modele\\Harta\\16.zip","16.mesh.j3o", "bloc",2000,5,-1755,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",3170,13,-1555,7f,7f,7f,0,0,0,0));//cladiri cercetare
         load_object(new requestHandler("load","Modele\\Harta\\17.zip","173.mesh.j3o", "bloc",2440,13,-820,7f,7f,7f,0,0,0,0));//cladiri cercetare
@@ -302,13 +303,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     public void lightSetup()
     {
         PointLight lamp_light2 = new PointLight();
-        lamp_light2.setColor(ColorRGBA.White.mult(0.2f));
+        lamp_light2.setColor(ColorRGBA.White.mult(.2f));
         lamp_light2.setRadius(100000);
         lamp_light2.setPosition(new Vector3f(-5000,5000,5000));
         rootNode.addLight(lamp_light2);
 
         PointLight lamp_light = new PointLight();
-        lamp_light.setColor(ColorRGBA.White.mult(0.7f));
+        lamp_light.setColor(ColorRGBA.White.mult(.7f));
         lamp_light.setRadius(100000);
         lamp_light.setPosition(new Vector3f(5000,5000,-5000));
 
@@ -348,6 +349,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Change_camera", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         inputManager.addMapping("Teleport", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
+        inputManager.addMapping("fire1", new KeyTrigger(KeyInput.KEY_1));
+        inputManager.addMapping("fire2", new KeyTrigger(KeyInput.KEY_2));
+        inputManager.addMapping("fire3", new KeyTrigger(KeyInput.KEY_3));
+        inputManager.addMapping("fire4", new KeyTrigger(KeyInput.KEY_4));
+        inputManager.addMapping("fire5", new KeyTrigger(KeyInput.KEY_5));
+        inputManager.addMapping("fire6", new KeyTrigger(KeyInput.KEY_6));
+        inputManager.addMapping("fire", new KeyTrigger(KeyInput.KEY_H));
         inputManager.addListener(this, "Left");
         inputManager.addListener(this, "Right");
         inputManager.addListener(this, "Up");
@@ -355,6 +363,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         inputManager.addListener(this, "Jump");
         inputManager.addListener(this, "Change_camera");
         inputManager.addListener(this, "Teleport");
+        inputManager.addListener(this, "fire1");
+        inputManager.addListener(this, "fire2");
+        inputManager.addListener(this, "fire3");
+        inputManager.addListener(this, "fire4");
+        inputManager.addListener(this, "fire5");
+        inputManager.addListener(this, "fire6");
+        inputManager.addListener(this, "fire");
     }
 
     public void onAction(String binding, boolean isPressed, float tpf) {
@@ -379,6 +394,41 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         else if (binding.equals("Jump")) {
             if (isPressed) {
                 player.jump();
+            }
+        }
+        else if (binding.equals("fire1")) {
+            if (isPressed) {
+                environment_hol.foc[0]=1;
+            }
+        }
+        else if (binding.equals("fire2")) {
+            if (isPressed) {
+                environment_hol.foc[1]=1;
+            }
+        }
+        else if (binding.equals("fire3")) {
+            if (isPressed) {
+                environment_hol.foc[2]=1;
+            }
+        }
+        else if (binding.equals("fire4")) {
+            if (isPressed) {
+                environment_hol.foc[3]=1;
+            }
+        }
+        else if (binding.equals("fire5")) {
+            if (isPressed) {
+                player.jump();
+                environment_hol.foc[4]=1;
+            }
+        }
+        else if (binding.equals("fire6")) {
+            if (isPressed) {
+                environment_hol.foc[5]=1;
+            }
+        }
+        else if (binding.equals("fire")) {
+            if (isPressed) {
                 environment.foc=1;
             }
         }
@@ -415,41 +465,13 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setParticlesPerSec(4000);
         numeObiect.getParticleInfluencer().setVelocityVariation(2f);
         if(x.pornit) {
-            switch (x.nume_obiect) {
-                case "water1":
-                    water1 = numeObiect;
-                    rootNode.attachChild(water1);
-                    break;
-                case "water2":
-                    water2 = numeObiect;
-                    rootNode.attachChild(water2);
-                    break;
-                case "water3":
-                    water3 = numeObiect;
-                    rootNode.attachChild(water3);
-                    break;
-                case "water4":
-                    water4 = numeObiect;
-                    rootNode.attachChild(water4);
-                    break;
-            }
+            water[x.index] = new ParticleEmitter();
+            water[x.index]=numeObiect;
+            rootNode.attachChild(water[x.index]);
         }
         else
         {
-            switch (x.nume_obiect) {
-                case "water1":
-                    rootNode.detachChild(water1);
-                    break;
-                case "water2":
-                    rootNode.detachChild(water2);
-                    break;
-                case "water3":
-                    rootNode.detachChild(water3);
-                    break;
-                case "water4":
-                    rootNode.detachChild(water4);
-                    break;
-            }
+            rootNode.detachChild(water[x.index]);
         }
     }
 
@@ -475,22 +497,17 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setNumParticles(1000*x.intensitate_foc);
         numeObiect.setParticlesPerSec(100*x.intensitate_foc);
         if(x.pornit) {
-            switch (x.nume_obiect) {
-                case "fire1":
-                    if(fire1!=null)
-                        rootNode.detachChild(fire1);
-                    fire1 = numeObiect;
-                    rootNode.attachChild(fire1);
-                    break;
+            if(fire[x.index]!=null)
+            {
+                rootNode.detachChild(fire[x.index]);
             }
+            fire[x.index] = new ParticleEmitter();
+            fire[x.index]=numeObiect;
+            rootNode.attachChild(fire[x.index]);
         }
         else
         {
-            switch (x.nume_obiect) {
-                case "fire1":
-                    rootNode.detachChild(fire1);
-                    break;
-            }
+           rootNode.detachChild(fire[x.index]);
         }
     }
 
@@ -517,38 +534,25 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setParticlesPerSec(100*x.intensitate_foc);
 
         if(x.pornit) {
-            switch (x.nume_obiect) {
-                case "smoketrail1":
-                    if(smoketrail1!=null)
-                        rootNode.detachChild(smoketrail1);
-                    smoketrail1 = numeObiect;
-                    rootNode.attachChild(smoketrail1);
-                    break;
+            if(smoke[x.index]!=null)
+            {
+                rootNode.detachChild(smoke[x.index]);
             }
+            smoke[x.index] = new ParticleEmitter();
+            smoke[x.index]=numeObiect;
+            rootNode.attachChild(smoke[x.index]);
         }
         else
         {
-            switch (x.nume_obiect) {
-                case "smoketrail1":
-                    rootNode.detachChild(smoketrail1);
-                    break;
-            }
+            rootNode.detachChild(smoke[x.index]);
         }
     }
 
     public void load_light(requestHandler x) {
-        PointLight lamp_light = new PointLight();
         final int SHADOWMAP_SIZE = 1024;
-        PointLightShadowRenderer dlsr = new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
-        PointLightShadowFilter dlsf = new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
-        lamp_light.setRadius(x.suprafata);
-        lamp_light.setPosition(new Vector3f(x.translatie_x, x.translatie_y, x.translatie_z));
 
-
-        if(x.nume_obiect.equals("led"))
+        if(x.nume_obiect!=null)
         {
-
-
             if(x.pornit==false && lumina_leduri[x.index]!=null)
             {
                     rootNode.removeLight(lumina_leduri[x.index]);
@@ -578,43 +582,37 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         }
         else
         {
-            if (x.alarma) {
-                lamp_light.setColor(ColorRGBA.Red.mult(x.intensitate_lumina));
-            } else {
-                lamp_light.setColor(ColorRGBA.White.mult(x.intensitate_lumina));
+            if(x.pornit==false && light[x.index]!=null)
+            {
+                rootNode.removeLight(light[x.index]);
+                viewPort.removeProcessor(dlsr[x.index]);
+                dlsf[x.index].setEnabled(false);
             }
-            dlsr.setLight(lamp_light);
-            dlsr.setShadowIntensity(0.8f);
-            dlsf.setLight(lamp_light);
-        }
+            else if (x.pornit==true)
+            {
+                light[x.index] = new PointLight();
+                dlsr[x.index]=new PointLightShadowRenderer(assetManager, SHADOWMAP_SIZE);
+                dlsf[x.index]=new PointLightShadowFilter(assetManager, SHADOWMAP_SIZE);
 
-        switch (x.nume_obiect) {
-            case "light1":
-                if(light1!=null) {
-                    rootNode.removeLight(light1);
-                    viewPort.removeProcessor(dlsr1);
-                    dlsf1.setEnabled(false);
+                if(x.alarma==true) {
+                    light[x.index].setColor(ColorRGBA.Red.mult(x.intensitate_lumina));
                 }
-                light1 = lamp_light;
-                dlsr1 = dlsr;
-                dlsf1 =dlsf;
-                rootNode.addLight(light1);
-                viewPort.addProcessor(dlsr1);
-                dlsf1.setEnabled(true);
-                break;
-        }
+                else
+                {
+                    light[x.index].setColor(ColorRGBA.White.mult(x.intensitate_lumina));
+                }
+                light[x.index].setPosition(new Vector3f(x.translatie_x, x.translatie_y, x.translatie_z));
+                light[x.index].setRadius(x.suprafata);
 
-        if(x.pornit==false)
-        {
-            switch (x.nume_obiect) {
-                case "light1":
-                    light1.setColor(ColorRGBA.randomColor().mult(0));
-                    viewPort.removeProcessor(dlsr1);
-                    break;
+                dlsr[x.index].setLight(light[x.index]);
+                dlsr[x.index].setShadowIntensity(0.8f);
+                dlsr[x.index].setLight(light[x.index]);
+
+                rootNode.addLight(light[x.index]);
+                viewPort.addProcessor(dlsr[x.index]);
+                dlsf[x.index].setEnabled(true);
             }
         }
-
-
     }
 
     public void load_object(requestHandler x)
@@ -740,8 +738,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         hudText.setText("Coordonate:\n" + (int)cam.getLocation().getX() +"x"+ " "+(int)cam.getLocation().getY()+"y"+" "+(int)cam.getLocation().getZ()+"z");
         hudText2.setText("Locatie: "+locatie);
         hudText3.setText("Temperatura:\n" + environment.temperatura_interior+" °C");
-        hudText4.setText("Foc: "+ environment.foc);
-        hudText5.setText("Fum: "+environment.fum);
+        hudText4.setText("Foc: "+ environment_hol.foc[4]);
+        hudText5.setText("Fum: "+environment_hol.fum[4]);
         String blabla = null;
         if(environment.ventilatie==2)
             blabla = "Trage aer";
@@ -782,11 +780,11 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         if(controller.lista_celule.get(0).contains("Camera7"))
             hudText18.setColor(ColorRGBA.Green);
         else
-            hudText18.setColor(ColorRGBA.Gray);*/
+            hudText18.setColor(ColorRGBA.Gray);
         if(controller.lista_celule.get(0).contains("server"))
             hudText19.setColor(ColorRGBA.Green);
         else
-            hudText19.setColor(ColorRGBA.Gray);
+            hudText19.setColor(ColorRGBA.Gray);*/
 
 
     }
