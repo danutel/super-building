@@ -20,7 +20,7 @@ public class senzorFum_hol extends Agent {
                     else
                         fum[i] = false;
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -51,7 +51,7 @@ public class senzorFum_hol extends Agent {
                 mesaj_fum.setContent(String.valueOf(text));
                 myAgent.send(mesaj_fum);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

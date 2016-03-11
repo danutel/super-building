@@ -18,6 +18,10 @@ public class controller_hol extends Agent{
     public static List<String> lista_celule = new ArrayList<>();
     @Override
     public void setup(){
+        for(int i=0;i<6;i++)
+        {
+            electricitate[i]=true;
+        }
         addBehaviour(new Behaviour() {
             @Override
             public void action() {
@@ -26,6 +30,7 @@ public class controller_hol extends Agent{
                 {
                     if(mesaj_receptionat.getConversationId()=="fum[]")
                     {
+                        myAgent.receive();
                         fum[0] = Boolean.parseBoolean(mesaj_receptionat.getContent().split("~")[0]);
                         fum[1] = Boolean.parseBoolean(mesaj_receptionat.getContent().split("~")[1]);
                         fum[2] = Boolean.parseBoolean(mesaj_receptionat.getContent().split("~")[2]);
@@ -33,15 +38,14 @@ public class controller_hol extends Agent{
                         fum[4] = Boolean.parseBoolean(mesaj_receptionat.getContent().split("~")[4]);
                         fum[5] = Boolean.parseBoolean(mesaj_receptionat.getContent().split("~")[5]);
                     }
-
-                    if(mesaj_receptionat.getConversationId().equals("lista_celule"))
+                   /* if(mesaj_receptionat.getConversationId().equals("lista_celule"))
                     {
                         lista_celule.clear();
                         lista_celule.add(mesaj_receptionat.getContent());
-                    }
+                    }*/
                 }
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -105,17 +109,16 @@ public class controller_hol extends Agent{
                 mesaj_electricitate.addReceiver(r4);
                 mesaj_electricitate.setContent(ve);
                 myAgent.send(mesaj_electricitate);
-
-                ACLMessage mesaj_server = new ACLMessage(ACLMessage.REQUEST);
+              /*  ACLMessage mesaj_server = new ACLMessage(ACLMessage.REQUEST);
                 AID rec = new AID("server@server", AID.ISGUID);
                 rec.addAddresses(environment.adresa_server);
                 mesaj_server.setConversationId("ospf");
                 mesaj_server.addReceiver(rec);
                 mesaj_server.setContent("test");
-                myAgent.send(mesaj_server);
+                myAgent.send(mesaj_server);*/
 
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

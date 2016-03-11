@@ -11,6 +11,7 @@ public class electricitate extends Agent {
             public void action() {
                 ACLMessage mesaj_receptionat = myAgent.receive();
                 if(mesaj_receptionat!=null) {
+                    myAgent.receive();
                     if (mesaj_receptionat.getConversationId() == "electricitate") {
                         electricitate = Boolean.parseBoolean(mesaj_receptionat.getContent());
                         environment.curent_electric=electricitate;

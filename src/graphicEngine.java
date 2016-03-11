@@ -57,12 +57,6 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private Spatial vent;
     private Spatial barbat1;
     private Spatial femeie1;
-    //private ParticleEmitter smoketrail1;
-    //private ParticleEmitter water1,water2,water3,water4;
-    //private ParticleEmitter fire1;
-    //private PointLight light1,light2,light3,light4,light5,light6,light7;
-    //private PointLightShadowRenderer dlsr1,dlsr2,dlsr3,dlsr4,dlsr5,dlsr6,dlsr7;
-    //private PointLightShadowFilter dlsf1,dlsf2,dlsf3,dlsf4,dlsf5,dlsf6,dlsf7;
     private PointLight [] light = new PointLight[21];
     private PointLightShadowRenderer [] dlsr = new PointLightShadowRenderer[21];
     private PointLightShadowFilter [] dlsf = new PointLightShadowFilter[21];
@@ -76,7 +70,6 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     private Vector3f camDir = new Vector3f();
     private Vector3f camLeft = new Vector3f();
     private Vector3f walkDirection = new Vector3f();
-    private int intensitate_fum=0;
     private String locatie = "";
     public static List<requestHandler> request = new ArrayList<requestHandler>();
     private SpotLight[] lumina_leduri = new SpotLight[61];
@@ -399,6 +392,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         else if (binding.equals("fire1")) {
             if (isPressed) {
                 environment_hol.foc[0]=1;
+
             }
         }
         else if (binding.equals("fire2")) {
@@ -418,13 +412,12 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         }
         else if (binding.equals("fire5")) {
             if (isPressed) {
-                player.jump();
-                environment_hol.foc[4]=1;
+                environment_hol.foc[4]=.5f;
             }
         }
         else if (binding.equals("fire6")) {
             if (isPressed) {
-                environment_hol.foc[5]=1;
+                environment_hol.foc[5]=.1f;
             }
         }
         else if (binding.equals("fire")) {
@@ -476,7 +469,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
     }
 
     public void foc_start(requestHandler x){
-        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 100*x.intensitate_foc);
+        ParticleEmitter numeObiect = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 100*(int)x.intensitate_foc);
         Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
         mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
         numeObiect.setMaterial(mat_red);
@@ -491,10 +484,10 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setLowLife((x.intensitate_foc/(float)10)*2.5f);
         numeObiect.setHighLife((x.intensitate_foc/(float)10)*3.5f);
         numeObiect.setVelocityVariation((x.intensitate_foc/(float)10)*0.35f);
-        numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
+       // numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
         numeObiect.setLocalTranslation((x.translatie_x-(10f*x.intensitate_foc)/2),x.translatie_y,(x.translatie_z-(15f*x.intensitate_foc)/2));
         numeObiect.setShape(new EmitterBoxShape(new Vector3f(0, 0, 0), new Vector3f(10f*x.intensitate_foc, 0.8f*x.intensitate_foc, 15f*x.intensitate_foc)));
-        numeObiect.setNumParticles(1000*x.intensitate_foc);
+        numeObiect.setNumParticles(1000*(int)x.intensitate_foc);
         numeObiect.setParticlesPerSec(100*x.intensitate_foc);
         if(x.pornit) {
             if(fire[x.index]!=null)
@@ -529,8 +522,8 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
         numeObiect.setLowLife((30/(float)10)*2.5f);
         numeObiect.setHighLife((30/(float)10)*3.5f);
         numeObiect.setShape(new EmitterBoxShape(new Vector3f(0, 0, 0), new Vector3f(3f*30, 0.6f*30, 4f*30)));
-        numeObiect.setNumParticles(800*x.intensitate_foc);
-        numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
+        numeObiect.setNumParticles(800*(int)x.intensitate_foc);
+        //numeObiect.setQueueBucket(RenderQueue.Bucket.Translucent);
         numeObiect.setParticlesPerSec(100*x.intensitate_foc);
 
         if(x.pornit) {
@@ -587,6 +580,9 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
                 rootNode.removeLight(light[x.index]);
                 viewPort.removeProcessor(dlsr[x.index]);
                 dlsf[x.index].setEnabled(false);
+                light[x.index]=null;
+                dlsr[x.index]=null;
+                dlsf[x.index]=null;
             }
             else if (x.pornit==true)
             {
@@ -677,6 +673,7 @@ public class graphicEngine extends SimpleApplication implements ActionListener{
          if (request.isEmpty()==false)
         {
             requestHandler x = request.get(0);
+            nucleu.request_motor_grafic.add(x);
             switch (x.type)
             {
                 case "load": load_object(x);

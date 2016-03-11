@@ -11,6 +11,8 @@ public class stropitori extends Agent {
             public void action() {
                 ACLMessage mesaj_receptionat = myAgent.receive();
                 if(mesaj_receptionat!=null) {
+                    myAgent.receive();
+                    myAgent.receive();
                     if (mesaj_receptionat.getConversationId() == "stropitori") {
                         stropitori = Boolean.parseBoolean(mesaj_receptionat.getContent());
                         environment.sprinkler=stropitori;
@@ -25,7 +27,7 @@ public class stropitori extends Agent {
                     }
                 }
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

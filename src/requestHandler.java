@@ -20,7 +20,7 @@ public class requestHandler {
     public float intensitate_lumina;
     public float suprafata;
     public boolean alarma;
-    public int intensitate_foc;
+    public float intensitate_foc;
     public ColorRGBA culoare;
     public boolean[] lala;
 
@@ -40,7 +40,7 @@ public class requestHandler {
         this.rotatie_x = rotatie_x;
         this.rotatie_y = rotatie_y;
         this.rotatie_z = rotatie_z;
-        this.masa = masa;
+        this.masa = masa;//obiecte
     }
 
     public requestHandler(String type, int index, boolean pornit, boolean alarma, float intensitate_lumina, float suprafata, int translatie_x, int translatie_y, int translatie_z) {
@@ -52,7 +52,7 @@ public class requestHandler {
         this.intensitate_lumina = intensitate_lumina;
         this.suprafata = suprafata;
         this.index = index;
-        this.alarma = alarma;
+        this.alarma = alarma;//lumina
     }
 
     public requestHandler(String type, int index, boolean pornit, int translatie_x, int translatie_y, int translatie_z) {
@@ -61,17 +61,17 @@ public class requestHandler {
         this.translatie_z = translatie_z;
         this.type = type;
         this.pornit = pornit;
-        this.index=index;
+        this.index=index;//stropitoare
     }
 
-    public requestHandler(String type, int index, boolean pornit, int intensitate, int translatie_x, int translatie_y, int translatie_z) {
+    public requestHandler(String type, int index, boolean pornit, float intensitate, int translatie_x, int translatie_y, int translatie_z) {
         this.translatie_x = translatie_x;
         this.translatie_y = translatie_y;
         this.translatie_z = translatie_z;
         this.type = type;
         this.pornit = pornit;
         this.index=index;
-        this.intensitate_foc = intensitate;
+        this.intensitate_foc = intensitate;//foc
     }
 
     public requestHandler(String type, String nume_obiect, boolean pornit, int index, float intensitate_lumina, float suprafata, int translatie_x, int translatie_y, int translatie_z,ColorRGBA culoare) {
@@ -84,12 +84,6 @@ public class requestHandler {
         this.suprafata = suprafata;
         this.nume_obiect = nume_obiect;
         this.index = index;
-        this.culoare=culoare;
-    }
-
-    public requestHandler(String type,boolean[] lala)
-    {
-        this.type=type;
-        this.lala=lala;
+        this.culoare=culoare;//leduri
     }
 }
